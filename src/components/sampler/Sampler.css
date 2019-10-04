@@ -1,0 +1,111 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+
+
+.left-arrow{
+  cursor: pointer;
+  width: calc(20px + 5vmin);
+  height: calc(20px + 5vmin);
+  position: absolute;
+  background-color: white;
+  border-radius: 100px;
+  padding: 2vmin;
+  left: 5vmin;
+  top: 3vmin;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: 0.4s ease;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: rgb(0,0,0,0);
+}
+
+
+.left-arrow:hover{
+  width: calc(30px + 5vmin);
+  height: calc(30px + 5vmin);
+}
+
+.instructions1{
+  pointer-events: none;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  bottom: 0;
+  list-style: none;
+}
+
+.instructions2{
+  pointer-events: none;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 0;
+  right: 4vmin;
+  
+}
+
+.instructions1 ul{
+  z-index: 500;
+  position: relative;
+  list-style: none;
+  height: 12vmin;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  border-radius: 15px;
+  padding-inline-start: 0;
+}
+
+.instructions2 ul{
+  list-style: none;
+  display: flex;
+  width: 12vmin;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: white;
+  border-radius: 15px;
+  padding-inline-start: 0;
+}
+
+
+.instructions1 li {
+  margin: 0 5vmin;
+  padding: 0;
+}
+
+.instructions2 li {
+  line-height: 8vmin;
+  margin: 3vmin 0;
+  padding: 0 3vmin;
+  text-align: center;
+  
+}
+
+.bolder{
+  font-weight: 700;
+}

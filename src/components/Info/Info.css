@@ -1,0 +1,26 @@
+a{
+    color: white;
+    margin-bottom: 2vh;
+
+
+}
+
+.socialmedia_icons2 ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    border-radius: 100px;
+    vertical-align: middle;
+    /* background-color: #;01B2631; */
+    padding-inline-start: 0;
+    padding: 1vmin 0.5vmin;
+}
+
+.socialmedia_icons2 li{
+    cursor: pointer;
+    margin: auto 0;
+    display: inline;
+    position: relative;
+}
