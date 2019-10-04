@@ -196,6 +196,7 @@ export function Sampler(props){
       <div style={{zIndex:'10',position: 'absolute',height: '100%',left: (width-window.innerWidth),width: '100%',display: 'flex',boxShadow: '  3px 0px 14px 0px rgba(0,0,0,0.38)',backgroundImage: backgrounds[currentBackground].url,backgroundColor:currentColor,justifyContent: 'center',alignItems: 'center',pointerEvents:'none',transition: transition}}>
         <img style={{height: '40vh',zIndex: '100',userSelect:'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',animationName:'spin',animationDuration: `${2000-position*500}ms`,animationIterationCount: 'infinite',animationTimingFunction: 'linear'}} alt="logo" src='./logo.svg'/> 
       </div>
+      <a style={{position:"absolute",bottom: '0',margin:'0 1vmin',left: '0',zIndex: '200'}} href="https://github.com/onurio/webappTONP" rel="noopener noreferrer" target="_blank" ><img className="github_link" alt='github' src='./github.svg' /></a>
       <Instructions opacity={instOpacity}/>
       <PlayDiv sampleNumber={'1'} keyP={'A'} backgrounds={backgrounds} bg={'bg1'}   onClick={onClick} onRelease={onRelease} />
       <PlayDiv sampleNumber={'2'} keyP={'S'} backgrounds={backgrounds} bg={'bg2'}  onClick={onClick} onRelease={onRelease}/>

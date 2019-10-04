@@ -109,3 +109,16 @@ html {
 .bolder{
   font-weight: 700;
 }
+
+.github_link{
+  width:calc(30px + 3vmin);;
+  height: calc(30px + 3vmin);
+  transition: 0.5s;
+}
+
+@media only screen and (min-width: 768px){
+  .github_link:hover{
+      width: calc(40px + 3vmin);
+      height: calc(40px + 3vmin);
+  }
+}
