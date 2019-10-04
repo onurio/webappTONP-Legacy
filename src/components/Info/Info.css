@@ -24,3 +24,10 @@ a{
     display: inline;
     position: relative;
 }
+
+.socialmedia_icons2{
+    bottom: calc(30px + 4vmin);
+    width: 100%; 
+    height: calc(30px + 4vmin);
+    margin-bottom: 20vmin;
+}

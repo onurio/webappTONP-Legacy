@@ -22,8 +22,10 @@ export const Info = (props)=>{
                     <li><a href='http://www.instagram.com/omrinuri' rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='instagram' src='./instagram.svg'/></a></li>
                     <li><a href="https://www.facebook.com/theomrinuriproject" ><img className="social_icon" alt='facebook' src='./facebook.svg' /></a></li>
                     <li><a href="https://www.youtube.com/channel/UCWTtkU868XGUQy0uMJt71kA"><img className="social_icon" alt='youtube' src='./youtube.svg' /></a></li>
+                    <li><a href="https://github.com/onurio"><img className="social_icon" alt='github' src='./github.svg' /></a></li>
                 </ul>
-          </div>
+            </div>
+            <div className="space"/>
         </div>
     );
 }

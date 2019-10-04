@@ -49,8 +49,9 @@ p{
 
 .socialmedia_icons{
     position: fixed;
-    bottom: 0;
+    bottom: calc(30px + 4vmin);
     right: 2vmin;
+    height: calc(30px + 4vmin);
 }
 
 .socialmedia_icons ul{
