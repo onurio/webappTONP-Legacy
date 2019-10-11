@@ -4,6 +4,7 @@ import './App.css';
 import {Main} from './components/Main/Main';
 import {Info} from './components/Info/Info';
 import {Works} from './components/Works/Works';
+import {FourNotes} from './components/FourNotes/FourNotes';
 import Tone from 'tone';
 import e1 from '../src/audio/1.wav';
 import kick from '../src/audio/Kick.mp3';
@@ -79,6 +80,12 @@ function App() {
           <Works setPage={handlePageChange}/>
         </div>
       );
+    // case 'fournotes':
+    //   return(
+    //     <div className="App">
+    //       <FourNotes setPage={handlePageChange}/>
+    //     </div>
+    //   );
   }
 
 }

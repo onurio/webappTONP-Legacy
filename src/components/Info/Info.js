@@ -16,6 +16,11 @@ export const Info = (props)=>{
             </p>
             <h3>Contact</h3>
             <p>For booking, concerts, custom interactive music experiences (for companies, schools, galleries and more)</p>
+            <h4>Presskit</h4>
+            <div style={{marginBottom:'5vmin'}} >
+                <a style={{marginRight: '2vmin'}} href='./Presskit-English.pdf' download>English</a>
+                <a href='./Presskit-Español.pdf' download>Español</a>
+            </div>
             <a href="mailto:theomrinuriproject@gmail.com">email</a>
             <div className='socialmedia_icons2'>
                 <ul>

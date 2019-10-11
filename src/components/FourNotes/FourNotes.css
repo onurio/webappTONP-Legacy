@@ -1,0 +1,8 @@
+.touch{
+    background-color: black;
+    z-index: 500;
+    width: 15vmin;
+    height: 15vmin;
+    position: absolute;
+    border-radius: 100px;
+}

@@ -1,0 +1,13 @@
+.note-button{
+    height: 50%;
+    /* background-color: blue; */
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: rgb(0,0,0,0);
+}

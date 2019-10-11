@@ -19,7 +19,6 @@ const loadingStyle = {
 
 
 
-
 const times = {
   1: [47.3,50.7],
   2: [0.45,3.77],
