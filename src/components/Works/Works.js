@@ -6,7 +6,7 @@ import './Works.css';
 export const Works=(props)=>{
 
     return (
-        <div className='main'>
+        <div className='main mainwrapper'>
             <header>
                 <NavBar setPage={props.setPage}/>
             </header>

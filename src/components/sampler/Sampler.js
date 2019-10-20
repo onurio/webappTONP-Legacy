@@ -46,6 +46,8 @@ export function Sampler(props){
   const [instOpacity,setInstOpacity] = useState(0);
   const [showDeskInst,setShowDeskInst] = useState('none'); 
 
+  
+
 
   let bg1 = {
     color: '#5f7ca6',
@@ -84,6 +86,8 @@ export function Sampler(props){
     f: '4',
     F: '4'
   }
+
+  
 
   useEffect(()=>{
     pitchShift.pitch = 5;
@@ -173,6 +177,7 @@ export function Sampler(props){
   return (
     <div style={{height: '100%',userSelect: 'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',outline: 'none'}}  tabIndex={0} onKeyUp={(e)=>{onRelease()}} onKeyDown={(e)=>{if(!e.repeat && keys[e.key]!==undefined){handleKeyDown(keys[e.key])}}} ref={genDiv}
       onTouchMove={(e)=>{
+        e.preventDefault();
         if(isMobile)
         {
           setMouseX(e.touches[0].clientX);

@@ -27,6 +27,11 @@ function App() {
   const [soundEffects,setSoundEffects] = useState(undefined);
   const [areEffectsLoaded,setAreEffectsLoaded] = useState(false);
 
+  const preventZoom=(e)=>{
+    e.preventDefault();
+    document.body.style.zoom = 0.999999;
+  }
+
   useEffect(()=>{
     const newSoundEffects = new Tone.Sampler({
       "C3" : e1,
@@ -37,6 +42,14 @@ function App() {
       setAreEffectsLoaded(true);
     }).toMaster();
     setSoundEffects(newSoundEffects);
+    document.addEventListener('gesturestart', (e)=>preventZoom(e));
+    document.addEventListener('gesturechange', (e)=>preventZoom(e));
+    document.addEventListener('gestureend', (e)=>preventZoom(e));
+    return (()=>{
+      document.removeEventListener('gestureend',(e)=>preventZoom(e));
+      document.removeEventListener('gesturechange', (e)=>preventZoom(e));
+      document.removeEventListener('gestureend', (e)=>preventZoom(e));
+    });
   },[])
 
 
@@ -80,12 +93,12 @@ function App() {
           <Works setPage={handlePageChange}/>
         </div>
       );
-    // case 'fournotes':
-    //   return(
-    //     <div className="App">
-    //       <FourNotes setPage={handlePageChange}/>
-    //     </div>
-    //   );
+    case 'fournotes':
+      return(
+        <div className="App">
+          <FourNotes setPage={handlePageChange}/>
+        </div>
+      );
   }
 
 }
