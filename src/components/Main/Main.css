@@ -2,8 +2,10 @@
     display: inline-flex;
     align-items: center;
     margin-bottom: 0vh;
-    margin-top: -3vh;
+    margin-top: 0vh;
+    user-select: none;
 }
+
 
 
 
@@ -27,6 +29,7 @@ p{
 @media only screen and (max-width: 768px){
     p{
         padding: 6vh 10vw;
+        user-select: none;
     }
 }
 
@@ -72,5 +75,10 @@ p{
     margin: auto 0;
     display: inline;
     position: relative;
+}
+
+h1{
+    margin: 0 3vmin;
+    transition: 0.5s;
 }
 

@@ -1,0 +1,13 @@
+#canvas{
+    width: 80vmin;
+    user-select: none;
+    margin: -4vh 0;
+}
+
+@media only screen and (max-width: 600px){
+    #canvas{
+        width: 100%;
+        margin: 0;
+    }
+}
+

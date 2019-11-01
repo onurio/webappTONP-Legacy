@@ -19,7 +19,7 @@ const effectMapping = {
   info: 'F3'
 }
 
-export let isMobile = (window.screen.width < 768);
+export let isMobile = (window.screen.width < 780);
 
 
 function App() {
