@@ -16,9 +16,7 @@ let heading = <HeadAnimation/>;
 export const Main=(props)=>{
   // const [count,setCount] = useState(1);
 
-  useEffect(()=>{
-    console.log(isIphone);
-  
+  useEffect(()=>{  
     if(pixelRatio <= 2 && isMobile && !isIphone)
     {
       heading = <Heading onClick={props.playChord} onRelease={props.stopChord} />;

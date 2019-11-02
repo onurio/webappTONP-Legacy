@@ -177,7 +177,6 @@ export function Sampler(props){
   return (
     <div style={{height: '100%',userSelect: 'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',outline: 'none'}}  tabIndex={0} onKeyUp={(e)=>{onRelease()}} onKeyDown={(e)=>{if(!e.repeat && keys[e.key]!==undefined){handleKeyDown(keys[e.key])}}} ref={genDiv}
       onTouchMove={(e)=>{
-        e.preventDefault();
         if(isMobile)
         {
           setMouseX(e.touches[0].clientX);

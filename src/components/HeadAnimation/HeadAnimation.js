@@ -19,11 +19,14 @@ const easeInOut =(t)=> { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 };
 export const HeadAnimation=(props)=> {
   let canvasRef = useRef(null);
   const [ctx, setCtx] = useState(null);
-  const [canvas,setCanvas] = useState(1);
+  // const [canvas,setCanvas] = useState(1);
   // const [currentSize,setCurrentSize] = useState([]);
   const [rotation, setRotation] = useState(0);
   const [pressed, setPressed] = useState(false);
   const [shapeSize,setShapeSize] = useState(14);
+
+
+
 
   useEffect(() => {
     sizeCanvas(canvasRef);
@@ -46,7 +49,7 @@ export const HeadAnimation=(props)=> {
     canvasNew.height = height;
     // canvasNew.style.width = `${window.innerWidth}px`;
     // canvasNew.style.height = `${350}px`;
-    setCanvas(canvasNew);
+    // setCanvas(canvasNew);
     drawLogo(ctxNew,width,height);
   }
 
@@ -64,8 +67,6 @@ export const HeadAnimation=(props)=> {
       );
     }
     ctx.closePath();
-    // ctx.shadowBlur = 5;
-    // ctx.shadowColor = "black";
     ctx.fillStyle = fillColor;
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = strokeWidth;
