@@ -1,67 +1,35 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect} from 'react';
 import './Main.css';
 import {NavBar} from '../NavBar/NavBar';
 import {HeadAnimation} from '../HeadAnimation/HeadAnimation';
 import {Heading} from '../Heading/Heading';
 import {pixelRatio} from '../HeadAnimation/HeadAnimation';
 import { isMobile } from '../../App';
-import Tone from 'tone';
+import {isIphone} from '../../App';
 
 
-
-
-
-var panner = new Tone.AutoPanner(1).toMaster();
-panner.depth.value = 0.5;
-// panner.gain = 0.3;
-panner.start();
-var autoWah = new Tone.AutoWah(15, 6, -25).chain(panner);
-autoWah.Q.value = 5;
-
-//a polysynth composed of 6 Voices of Synth
-
-let synth = new Tone.PolySynth(6, Tone.FMSynth, {
-  oscillator : {
-        type : "sine"
-    },
-}).connect(autoWah);
-synth.volume.value = -10;
-//set the attributes using the set interface
-synth.set({
-	"envelope" : {
-    "attack" : 0.3,
-    decay : 0.4 ,
-    sustain : 1 ,
-    release : 1
-
-	}
-});
 
 
 
 let heading = <HeadAnimation/>;
 
 export const Main=(props)=>{
-  const [chordCount,setChordCount] = useState(0);
+  // const [count,setCount] = useState(1);
 
   useEffect(()=>{
-    if(pixelRatio <= 2 && isMobile)
+    console.log(isIphone);
+  
+    if(pixelRatio <= 2 && isMobile && !isIphone)
     {
-      heading = <Heading onClick={playChord} onRelease={stopChord} />;
+      heading = <Heading onClick={props.playChord} onRelease={props.stopChord} />;
     }
     else
     {
-      heading= <HeadAnimation onClick={playChord} onRelease={stopChord} height={300} width={600}/>
+      heading= <HeadAnimation onClick={props.playChord} onRelease={props.stopChord}/>
     }
   });
 
-  const playChord=()=>{
-    synth.triggerAttack(['C4','G4','Eb5','Bb4'],undefined,0.4);
-  }
-
-  const stopChord=()=>{
-    synth.triggerRelease(['C4','G4','Eb5','Bb4']);
-  }
+  
 
   return( 
     <div className="main">

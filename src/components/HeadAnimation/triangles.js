@@ -1,37 +1,37 @@
 
 
 
-let xT = 50;
+let xT = 60;
 let yT = 650;
-let xH = 250;
+let xH = 280;
 let yH = 650;
-let xE = 450;
+let xE = 500;
 let yE = 650;
 let xO =  850;
 let yO = 475;
-let xO2 = 2250;
+let xO2 = 2240;
 let yO2 = 650;
 let xM = 1100;
 let yM = 475;
-let xP = 1850;
+let xP = 1820;
 let yP = 650;
-let xI = 1600;
+let xI = 1620;
 let yI = 475;
 let xR = 1400;
 let yR = 475;
-let xU = 1125;
+let xU = 1130;
 let yU = 800;
-let xC = 2775;
+let xC = 2785;
 let yC = 650;
 let xN = 900;
 let yN = 800;
-let xJ = 2500;
+let xJ = 2490;
 let yJ = 650;
 let xR2 = 1400;
 let yR2 = 800;
-let xR3 = 2050;
+let xR3 = 2035;
 let yR3 = 650;
-let xI2 = 1600;
+let xI2 = 1620;
 let yI2 = 800;
 let xE2 = 2570;
 let yE2 = 650;
@@ -5410,7 +5410,7 @@ triangles.forEach((tri)=>{
     let x =  Math.random();
     tri.rot2 = Math.random()*1600;
     tri.x2 = Math.floor(x*1500+50);
-    tri.y2 = Math.floor(Math.sin(x*26)*200+Math.random()*100+350);
+    tri.y2 = Math.floor(Math.sin(x*25)*200+Math.random()*150+350);
 })
 
 

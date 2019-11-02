@@ -19,7 +19,31 @@ const effectMapping = {
   info: 'F3'
 }
 
+
 export let isMobile = (window.screen.width < 780);
+export let isIphone = navigator.userAgent.indexOf("iPhone") !== -1 ;
+
+
+var autoPanner = new Tone.AutoPanner(1).toMaster();
+    autoPanner.depth.value = 0.5;
+    autoPanner.start();
+    var autoWah = new Tone.AutoWah(15, 6, -25).chain(autoPanner);
+    autoWah.Q.value = 5;
+    let chillSynth = new Tone.PolySynth(6, Tone.FMSynth, {
+      oscillator : {
+            type : "sine"
+        },
+    }).connect(autoWah);
+    chillSynth.volume.value = -10;
+    chillSynth.set({
+      "envelope" : {
+        "attack" : 0.3,
+        decay : 0.4 ,
+        sustain : 1 ,
+        release : 1
+
+      }
+    });
 
 
 function App() {
@@ -53,6 +77,14 @@ function App() {
   },[])
 
 
+  const playChord=()=>{
+    chillSynth.triggerAttack(['F#4','A4','C#5','E4'],undefined,0.4);
+  }
+
+  const stopChord=()=>{
+    chillSynth.triggerRelease(['F#4','A4','C#5','E4']);
+  }
+
 
   const handlePageChange=(page)=>{
     setPage(page);
@@ -78,7 +110,7 @@ function App() {
     case 'main':
       return (
         <div className="App">
-          <Main setPage={handlePageChange}/>
+          <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord} />
         </div>
       );
     case 'info':
