@@ -26,8 +26,6 @@ export const HeadAnimation=(props)=> {
   const [shapeSize,setShapeSize] = useState(14);
 
 
-
-
   useEffect(() => {
     sizeCanvas(canvasRef);
     window.addEventListener('resize',()=>{sizeCanvas(canvasRef)});
