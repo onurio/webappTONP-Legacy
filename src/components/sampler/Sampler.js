@@ -14,7 +14,9 @@ const loadingStyle = {
   padding: '2vmin 4vmin'
 }
 
-
+if (Tone.context.state !== 'running') {
+  Tone.context.resume();
+}
 
 
 

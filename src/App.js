@@ -10,6 +10,7 @@ import e1 from '../src/audio/1.wav';
 import kick from '../src/audio/Kick.mp3';
 import rim from '../src/audio/rim.mp3';
 import tom from '../src/audio/tom.mp3';
+import { FingerArp } from './components/FingerArp/FingerArp';
 
 
 const effectMapping = {
@@ -127,6 +128,12 @@ function App() {
       return(
         <div className="App">
           <Works setPage={handlePageChange}/>
+        </div>
+      );
+    case 'fingerarp':
+      return(
+        <div className="App">
+          <FingerArp/>
         </div>
       );
     case 'fournotes':
