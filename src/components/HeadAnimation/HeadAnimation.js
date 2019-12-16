@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import {triangles} from './triangles';
 import './HeadAnimation.css';
 import {isMobile} from '../../App';
+import {easeInOut,getPixelRatio} from '../../utils/utils';
 
 
 
@@ -13,14 +14,9 @@ export let pixelRatio = null;
 
 
 
-
-const easeInOut =(t)=> { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 };
-
 export const HeadAnimation=(props)=> {
   let canvasRef = useRef(null);
   const [ctx, setCtx] = useState(null);
-  // const [canvas,setCanvas] = useState(1);
-  // const [currentSize,setCurrentSize] = useState([]);
   const [rotation, setRotation] = useState(0);
   const [pressed, setPressed] = useState(false);
   const [shapeSize,setShapeSize] = useState(14);
@@ -28,16 +24,16 @@ export const HeadAnimation=(props)=> {
 
   useEffect(() => {
     sizeCanvas(canvasRef);
-    window.addEventListener('resize',()=>{sizeCanvas(canvasRef)});
+    window.addEventListener('resize',sizeCanvas(canvasRef));
+    return (()=>{window.removeEventListener('resize',sizeCanvas)});
     // eslint-disable-next-line
   },[]);
 
-
+  
   const sizeCanvas =(ref)=>{
     let canvasNew = ref.current;
     let width = 1600 ;
     let height = 800 ;
-    // setCurrentSize([width,height]);
     setShapeSize(14);
     let ctxNew = canvasNew.getContext("2d");
     setCtx(ctxNew);
@@ -45,13 +41,10 @@ export const HeadAnimation=(props)=> {
     pixelRatio = ratio;
     canvasNew.width = width;
     canvasNew.height = height;
-    // canvasNew.style.width = `${window.innerWidth}px`;
-    // canvasNew.style.height = `${350}px`;
-    // setCanvas(canvasNew);
     drawLogo(ctxNew,width,height);
   }
 
-
+  //draws a polygon
   const drawPolygon = (ctx,centerX,centerY,sideCount,size,strokeWidth,strokeColor,fillColor,rotationDegrees) => {
     var radians = (rotationDegrees * Math.PI) / 180;
     ctx.translate(centerX, centerY);
@@ -81,17 +74,6 @@ export const HeadAnimation=(props)=> {
   };
 
   
-  const getPixelRatio = (ctx) => {
-    var backingStore =
-      ctx.backingStorePixelRatio ||
-      ctx.webkitBackingStorePixelRatio ||
-      ctx.mozBackingStorePixelRatio ||
-      ctx.msBackingStorePixelRatio ||
-      ctx.oBackingStorePixelRatio ||
-      ctx.backingStorePixelRatio ||
-      1;
-    return (window.devicePixelRatio || 1) / backingStore;
-  };
 
   const onClick = e => {
     setPressed(true);
@@ -103,7 +85,14 @@ export const HeadAnimation=(props)=> {
     props.onRelease();
   };
 
+  //calculate animation position
+  const calcPosition =(x,x2,y,y2,stage)=>{
+    let calcX = (x-(x-x2)*easeInOut(stage/100));
+    let calcY = (y-(y-y2)*easeInOut(stage/100));
+    return {x: calcX,y: calcY};
+  }
 
+  //callback for finishing animation
   const finishAnim = (released,finishPos)=>{
     let animatingEnd = released;
     let requestId;
@@ -125,9 +114,8 @@ export const HeadAnimation=(props)=> {
         
         ctx.clearRect(0, 0, 3200, 1600);
         triangles.forEach((triangle)=>{
-          let x = ((triangle.x-(triangle.x-triangle.x2)*easeInOut(move/100)));
-          let y = ((triangle.y-(triangle.y-triangle.y2)*easeInOut(move/100)));
-          drawPolygon(ctx,x, y, 3, shapeSize, 1, "white", "white", triangle.rot + currentRot);
+          let position = calcPosition(triangle.x,triangle.x2,triangle.y,triangle.y2,move);
+          drawPolygon(ctx,position.x, position.y, 3, shapeSize, 1, "white", "white", triangle.rot + currentRot);
         });
         requestId = requestAnimationFrame(renderReturn);
       }
@@ -142,7 +130,7 @@ export const HeadAnimation=(props)=> {
 
 
 
-
+  //animation
   useEffect(() => {
     let requestId;
     let move = 0;
@@ -155,11 +143,9 @@ export const HeadAnimation=(props)=> {
         }
         currentRot += 2;
         ctx.clearRect(0, 0, 3200, 1600);
-        // canvas.width = canvas.width;
         triangles.forEach((triangle)=>{
-          let x = ((triangle.x-(triangle.x-triangle.x2)*easeInOut(move/100)));
-          let y = ((triangle.y-(triangle.y-triangle.y2)*easeInOut(move/100)));
-          drawPolygon(ctx,x, y, 3, shapeSize, 1, "white", "white", triangle.rot2 + currentRot);
+          let position = calcPosition(triangle.x,triangle.x2,triangle.y,triangle.y2,move);
+          drawPolygon(ctx,position.x, position.y, 3, shapeSize, 1, "white", "white", triangle.rot2 + currentRot);
         });
         requestId = requestAnimationFrame(renderMove);
       }

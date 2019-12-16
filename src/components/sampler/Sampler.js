@@ -2,9 +2,10 @@ import React,{ useState, useEffect,useRef} from 'react';
 import './Sampler.css';
 import Tone from 'tone';
 import {PlayDiv} from './PlayDiv';
-import nateSmith from '../../audio/nate_smith.mp3'
+import nateSmith from '../../audio/nate_smith.mp3';
 import {isMobile} from '../../App';
 import {Instructions} from './Instructions/Instructions';
+import {keys} from '../../utils/utils';
 
 
 const loadingStyle = {
@@ -14,9 +15,7 @@ const loadingStyle = {
   padding: '2vmin 4vmin'
 }
 
-if (Tone.context.state !== 'running') {
-  Tone.context.resume();
-}
+let insTimeout;
 
 
 
@@ -29,7 +28,6 @@ const times = {
 }
 
 const pitchShift  = new Tone.PitchShift();
-
 
 export function Sampler(props){
 
@@ -78,23 +76,13 @@ export function Sampler(props){
     bg4: bg4
   }
 
-  const keys = {
-    a: '1',
-    A: '1',
-    s: '2',
-    S: '2',
-    d: '3',
-    D: '3',
-    f: '4',
-    F: '4'
-  }
 
   
 
   useEffect(()=>{
     pitchShift.pitch = 5;
     pitchShift.windowSize = 0.02;
-    const newPlayer = new Tone.Player(nateSmith,()=>{setTimeout(function(){setIsLoaded(true)},500)}).chain(pitchShift,Tone.Master);
+    const newPlayer = new Tone.Player(nateSmith,insTimeout=setTimeout(()=>{setIsLoaded(true)},500)).chain(pitchShift,Tone.Master);
     newPlayer.loop = true;
     newPlayer.fadeOut = 0.015;
     newPlayer.fadeIn = 0.01;
@@ -172,7 +160,7 @@ export function Sampler(props){
     {
       setLoading('none');
       setInstOpacity(0.7);
-      setTimeout(()=>{setInstOpacity(0)},10000)
+      insTimeout = setTimeout(()=>{setInstOpacity(0)},10000);
     }
   },[isLoaded]);
 
@@ -197,7 +185,7 @@ export function Sampler(props){
         <h1 style={loadingStyle}>Loading...</h1>
         <h3 style={loadingStyle}>Turn off silent mode!</h3>
       </div>
-      <img className='left-arrow' src='./left-arrow.svg' onClick={(e)=>{props.setPage('main')}} alt='back'  />
+      <img className='left-arrow' src='./left-arrow.svg' onClick={(e)=>{props.setPage('main');clearTimeout(insTimeout)}} alt='back'  />
       <div style={{zIndex:'10',position: 'absolute',height: '100%',left: (width-window.innerWidth),width: '100%',display: 'flex',boxShadow: '  3px 0px 14px 0px rgba(0,0,0,0.38)',backgroundImage: backgrounds[currentBackground].url,backgroundColor:currentColor,justifyContent: 'center',alignItems: 'center',pointerEvents:'none',transition: transition}}>
         <img style={{height: '40vh',zIndex: '100',userSelect:'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',animationName:'spin',animationDuration: `${2000-position*500}ms`,animationIterationCount: 'infinite',animationTimingFunction: 'linear'}} alt="logo" src='./logo.svg'/> 
       </div>

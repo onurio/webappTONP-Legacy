@@ -20,10 +20,6 @@ const effectMapping = {
   info: 'F3'
 }
 
-if (Tone.context.state !== 'running') {
-  Tone.context.resume();
-}
-
 
 export let isMobile = (window.screen.width < 780);
 export let isIphone = navigator.userAgent.indexOf("iPhone") !== -1 ;
