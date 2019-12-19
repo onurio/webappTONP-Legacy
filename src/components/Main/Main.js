@@ -39,7 +39,6 @@ export const Main=(props)=>{
             props.setPage('play');
             }}>Play!</button>
           <p>An interactive music project by musician, composer and programmer Omri Nuri.</p>
-          <button className='button'onClick={()=>{props.setPage('fingerarp')}}>New game</button>
           <div className='socialmedia_icons'>
                 <ul>
                     <li><a href='http://www.instagram.com/omrinuri' rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='instagram' src='./instagram.svg'/></a></li>

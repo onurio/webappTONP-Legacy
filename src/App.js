@@ -10,7 +10,8 @@ import e1 from '../src/audio/1.wav';
 import kick from '../src/audio/Kick.mp3';
 import rim from '../src/audio/rim.mp3';
 import tom from '../src/audio/tom.mp3';
-import { FingerArp } from './components/FingerArp/FingerArp';
+import {Play} from './components/Play/Play';
+import { FingerArpContainer } from './components/FingerArp/FingerArpContainer';
 
 
 const effectMapping = {
@@ -105,13 +106,26 @@ function App() {
     case 'play':
       return (
         <div className="App" >
-          <Sampler setPage={handlePageChange}/>
+          <Play setPage={handlePageChange}/>
         </div>
       );
     case 'main':
       return (
         <div className="App">
           <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord} />
+        </div>
+      );
+    case 'five':
+      console.log('asdf'+isMobile);
+      return (
+        <div className="App">
+          <FingerArpContainer setPage={handlePageChange} />
+        </div>
+      );
+    case 'sampler':
+      return (
+        <div className="App">
+          <Sampler setPage={handlePageChange} />
         </div>
       );
     case 'info':
@@ -124,12 +138,6 @@ function App() {
       return(
         <div className="App">
           <Works setPage={handlePageChange}/>
-        </div>
-      );
-    case 'fingerarp':
-      return(
-        <div className="App">
-          <FingerArp/>
         </div>
       );
     case 'fournotes':

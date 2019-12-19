@@ -1,60 +1,81 @@
 import React,{useState,useEffect} from 'react';
 import Tone from 'tone';
 import Two from 'two.js';
-import {easeInOut,findDistance} from '../../utils/utils';
-
-
-const synth = new Tone.Synth();
-const gain = new Tone.Gain(0.6);
-synth.oscillator.type = 'sine';
-gain.toMaster();
-synth.connect(gain);
-
-var pattern = new Tone.Pattern(function(time, note){
-	synth.triggerAttackRelease(note, 0.25);
-}, ["C4", "D4", "E4", "G4", "A4"],"upDown");
-pattern.interval = "16n";
-
-// let chords = [["C4", "D4", "E4", "G4", "A4"],["C4", "F4", "B5", "G4", "D5"],["Db4", "F4", "G4", "Bb4", "C5"]];
-let circles = [];
+import {easeInOut,easeOutQuad,findDistance,streamSmoother} from '../../utils/utils';
 
 
 
-  
+Tone.context.latencyHint = 'balanced';
+
+const limiter = new Tone.Limiter(-3).toMaster();
+const filter = new Tone.Filter(2000, "lowpass");
+const filter2 = new Tone.Filter(200, "highpass");
+const pingPong = new Tone.PingPongDelay("16n", 0.06);
+pingPong.wet.value = 0.1;
 
 
 
 
-const progGenerator =()=>{
-    let options = ["C4","C#4","D4","D#4","E4","F4","F#4","G4","G#4","A4","A#4","B4"];
-    let prog=[];
-    for (let i=0;i<50;i++){
-        let chord =[]
-        for (let j=0;j<5;j++){
-            chord.push(options[Math.round(Math.random()*11)]);
-        }
-        prog.push(chord);
-    }
-    return prog;
-}
+const makeChords=(chordProg,times,startingPoint)=>{
+    let newChords=[];
+    for (let i=0;i<times;i++){
+        chordProg.forEach((chord)=>{
+            let newChord =[];
+            chord.forEach((note)=>{
+                let newNote = note+i*2+startingPoint;
+                newChord.unshift(Tone.Frequency(newNote, "midi").toNote());
+            });
+            newChords.push(newChord);
+        });
+    };
+    return newChords;
+};
+
+
+let winningSynth = new Tone.PolySynth(6, Tone.Synth, {
+    oscillator  : {
+        type  : 'triangle'
+        }  ,
+        envelope  : {
+        attack  : 0.2 ,
+        decay  : 0.2 ,
+        sustain  : 0.1 ,
+        release  : 0.1
+        }        
+  }).chain(pingPong,limiter);
+winningSynth.volume.value = -18;
+
+const synth = new Tone.FMSynth().chain(filter,filter2,pingPong,limiter);
+synth.modulation.type = 'sine';
+synth.oscillator.type = 'triangle';
+synth.envelope.attack = 0.2;
+synth.envelope.release = 0.04;
+synth.volume.value = 10;
+
+let pattern = new Tone.Pattern(function(time, note){
+    synth.triggerAttack(note);
+}, [],);
 
 const levelGenerator =()=>{
     let levels = [];
     for(let i=0;i<50;i++){
-        levels.push([Math.floor(Math.random()*4)+2,Math.round(Math.random()*200+50)]);
+        levels.push([Math.floor(Math.random()*4)+2,Math.round(Math.random()*230+70)]);
     }
     return levels;
 }
 
 let levels = levelGenerator();
-let prog = progGenerator();
 let winning = false;
 let interval = null;
-// let loaded = false;
+let stream = [];
+let circles = [];
+let oneDominanteProg = [[1,8,15,17,22],[1,6,10,16,20],[3,8,12,17,22],[1,8,11,17,22]];
+let chords = makeChords(oneDominanteProg,20,47);
+
 
 export const FingerArp =(props)=>{
     const [two,setTwo] = useState(null);
-    const [currentChord,setCurrentChord] = useState(prog[0]);
+    const [currentChord,setCurrentChord] = useState(chords[0]);
     const [maxDistance,setMaxDistance] = useState(null);
     const [text,setText] = useState(null);
     const [text2,setText2] = useState(null);
@@ -84,19 +105,18 @@ export const FingerArp =(props)=>{
         text.alignment = 'right';
         text.weight = 'bold';
         setText(text);
-        let text2 = two.makeText(`${levels[currentLevel][0]} fingers, at ${levels[currentLevel][1]} bpm`, width/2, height/5);
+        let text2 = two.makeText(`Fingers closer -> Tempo Higher`, width/2, height/4);
         text2.size = '5vmin';
         text2.family = 'Alef';
         setText2(text2)
-        let objective = two.makeText('Objective:',leftInfoX,height/14);
+        let objective = two.makeText('Next chord:',leftInfoX,height/14);
         objective.size = '5vmin';
         objective.family = 'Alef';
         objective.alignment = 'left';
         objective.weight = 'bold';
-        
         let levelBpm = two.makeText(`Tempo: ${levels[currentLevel][1]}`,width/15,height/6);
         setLevelBpm(levelBpm);
-        let levelNotes = two.makeText(`Notes: ${levels[currentLevel][0]}`,width/15,height/8);
+        let levelNotes = two.makeText(`Fingers: ${levels[currentLevel][0]}`,width/15,height/8);
         levelNotes.alignment = 'left';
         levelBpm.alignment = 'left';
         levelNotes.size = '4.5vmin';
@@ -111,7 +131,7 @@ export const FingerArp =(props)=>{
         let checkmark2 = two.makeGroup(l3,l4);
         let checkmarks = two.makeGroup(checkmark,checkmark2);
         checkmarks.linewidth = 5;
-        checkmark.translation.set(leftInfoX+ 75,height/8-10);
+        checkmark.translation.set(leftInfoX+ 85,height/8-10);
         checkmark2.translation.set(leftInfoX + 95,height/6-10);
         checkmark.scale = 0.5
         checkmark2.scale = 0.5;
@@ -120,30 +140,36 @@ export const FingerArp =(props)=>{
         setLevelNotes(levelNotes);
         setTwo(two);
         setLoaded(true);
-        // console.log('loaded');
         two.update();
-        // loaded = true;
     }
 
     const handleMotion = (e) =>{
-        // console.log(loaded);
-        if(loaded){
-            let gama  = Math.abs(e.accelerationIncludingGravity.x);
-            // text2.value = gama;
-            two.update();
+        let y = Math.abs(e.accelerationIncludingGravity.y);
+        if(stream.length<20){
+            stream.unshift(y);       
+        }else{
+            stream.pop();
+            stream.unshift(y);
+            y = (streamSmoother(stream))/10;
         }
-        // setBeta(Math.abs(e.accelerationIncludingGravity.y)*20);
-        // setGamma(Math.abs(e.accelerationIncludingGravity.z)*20);
+        y=easeOutQuad(y);
+        if(loaded){
+
+            synth.modulationIndex.value = y*150;
+        }
       };
 
     const changeChord = (chord) =>{
-        pattern.stop();
+        // pattern.stop();
+        pattern.dispose();
         pattern = new Tone.Pattern(function(time, note){
-            synth.triggerAttackRelease(note, 0.25);
+            synth.triggerAttackRelease(note, 0.04);
         }, chord,"upDown");
-        pattern.interval = "12n";
+        pattern.interval = "8n";
+        // pattern.humanize = true;
+        // pattern.probability = 0.9;
         pattern.start(0);
-        text2.value = `${chord}`;
+        text2.value = `${chord.reverse()}`;
         two.update();
     }
 
@@ -191,18 +217,14 @@ export const FingerArp =(props)=>{
         let bpm = level[1];
         if(touches===notes){
             rightNotes = true;
-            // text2.fill = 'green';
             check1.opacity = 1;
         }else{
-            // text2.fill = 'black';
             check1.opacity = 0;
         };
         if(currentBpm <= (bpm+5)&& currentBpm >= (bpm-5)){
             rightTempo = true;
-            // text.fill = 'green';
             check2.opacity = 1;
         }else{
-            // text.fill = 'black';
             check2.opacity = 0;
         };
         if(rightTempo&&rightNotes){
@@ -210,12 +232,13 @@ export const FingerArp =(props)=>{
                 winning = true;
                 text2.value = `next chord in 3`;
                 function endCountdown() {
-                    // logic to finish the countdown here
+                    winningSynth.triggerAttackRelease(chords[currentLevel],0.5);
                     setCurrentLevel(currentLevel+1);
                     levelBpm.value = `Tempo: ${levels[currentLevel+1][1]}`;
-                    levelNotes.value = `Notes: ${levels[currentLevel+1][0]}`;
+                    levelNotes.value = `Fingers: ${levels[currentLevel+1][0]}`;
                     text2.value = '';
-                    setCurrentChord(prog[Math.round(Math.random()*prog.length)]);
+                    setCurrentChord(chords[currentLevel+1]);
+                    
                   }
                   
                 function handleTimer() {
@@ -247,7 +270,6 @@ export const FingerArp =(props)=>{
             Tone.context.resume();
         }
         
-        // console.log(DeviceOrientationEvent);
         let touches = e.touches;
         let newChord;
         let notes;
@@ -314,7 +336,7 @@ export const FingerArp =(props)=>{
 
     useEffect(()=>{
         updateSize();
-        window.addEventListener('resize',(e)=>{updateSize();console.log(e)});
+        window.addEventListener('resize',(e)=>{updateSize()});
         return(()=>{
             window.removeEventListener('resize',updateSize());
             window.removeEventListener('devicemotion',(e)=>handleMotion(e));
@@ -348,7 +370,9 @@ export const FingerArp =(props)=>{
             onTouchStart={e=>{onClick(e);}}
             onTouchMove={e=>{handleMove(e)}}
             onTouchEnd={e=>{onRelease(e)}}
-            />
+            >
+            <h1 style={{position: 'absolute',bottom: 0,left:0,zIndex:999}} onClick={(e)=>props.setPage('play')}>exit</h1>
+            </div>
         </div>
         
     );
