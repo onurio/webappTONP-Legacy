@@ -52,6 +52,14 @@
     align-items: center;
 }
 
+
+.instructions_five{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+}
+
 @media only screen and (max-width: 768px){
     .gameContainer{
         top: 10rem;

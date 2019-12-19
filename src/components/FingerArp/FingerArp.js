@@ -87,6 +87,7 @@ export const FingerArp =(props)=>{
     const [levelBpm,setLevelBpm] = useState(null);
     const [levelNotes,setLevelNotes] = useState(null);
     const [loaded,setLoaded] = useState(false);
+    const [inst,setInst] = useState('none');
 
     const updateSize=()=>{
         let elem = document.getElementById('canvas');
@@ -142,6 +143,7 @@ export const FingerArp =(props)=>{
         setLoaded(true);
         two.update();
     }
+
 
     const handleMotion = (e) =>{
         let y = Math.abs(e.accelerationIncludingGravity.y);
@@ -367,11 +369,28 @@ export const FingerArp =(props)=>{
                 }
                 }
                     }
-            onTouchStart={e=>{onClick(e);}}
+            onTouchStart={e=>{
+                onClick(e);
+                if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                    DeviceMotionEvent.requestPermission().then(permissionState => {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('devicemotion', (e) => {handleMotion(e)});
+                        }   
+                     }).catch(console.error);
+                } else {
+                    window.addEventListener('devicemotion', (e) => {handleMotion(e)});
+                    // handle regular non iOS 13+ devices
+                }
+                }}
             onTouchMove={e=>{handleMove(e)}}
             onTouchEnd={e=>{onRelease(e)}}
             >
-            <h1 style={{position: 'absolute',bottom: 0,left:0,zIndex:999}} onClick={(e)=>props.setPage('play')}>exit</h1>
+            <h1 style={{position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');pattern.dispose();}}>exit</h1>
+            <h1 style={{position: 'absolute',bottom: 0,right:0,zIndex:800}} onTouchStart={(e)=>setInst('999')}>?</h1>
+            <div style={{zIndex:inst,position:'absolute',height:'100vh',backgroundColor:'white',padding:'0 3vmin'}} onTouchStart={(e)=>{setInst('0')}} className="instructions_five" >
+                <h2 style={{textAlign:'center'}}>Each finger plays a different note<br/><br/> move your fingers closer or farther away from each other to change the tempo<br/><br/>Follow the intructions on the top left side to change the chord<br/><br/></h2>
+                <h3>It's more fun with headphones</h3>
+            </div>
             </div>
         </div>
         

@@ -116,7 +116,6 @@ function App() {
         </div>
       );
     case 'five':
-      console.log('asdf'+isMobile);
       return (
         <div className="App">
           <FingerArpContainer setPage={handlePageChange} />
