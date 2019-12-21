@@ -82,7 +82,7 @@ export function Sampler(props){
   useEffect(()=>{
     pitchShift.pitch = 5;
     pitchShift.windowSize = 0.02;
-    const newPlayer = new Tone.Player(nateSmith,insTimeout=setTimeout(()=>{setIsLoaded(true)},1000)).chain(pitchShift,Tone.Master);
+    const newPlayer = new Tone.Player(nateSmith,insTimeout=setTimeout(()=>{setIsLoaded(true)},2000)).chain(pitchShift,Tone.Master);
     newPlayer.loop = true;
     newPlayer.fadeOut = 0.015;
     newPlayer.fadeIn = 0.01;

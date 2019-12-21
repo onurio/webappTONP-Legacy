@@ -12,6 +12,24 @@ import rim from '../src/audio/rim.mp3';
 import tom from '../src/audio/tom.mp3';
 import {Play} from './components/Play/Play';
 import { FingerArpContainer } from './components/FingerArp/FingerArpContainer';
+import firebase from 'firebase/app';
+import 'firebase/analytics';
+
+
+
+// Your web app's Firebase configuration
+
+const firebaseConfig = {
+  // private information
+};
+
+firebase.initializeApp(firebaseConfig);
+
+
+
+export {firebase};
+
+
 
 
 const effectMapping = {
@@ -104,6 +122,7 @@ function App() {
           </div>
         );
     case 'play':
+      firebase.analytics().logEvent('pressed_play');
       return (
         <div className="App" >
           <Play setPage={handlePageChange}/>
@@ -116,24 +135,28 @@ function App() {
         </div>
       );
     case 'five':
+      firebase.analytics().logEvent('entered_five');
       return (
         <div className="App">
           <FingerArpContainer setPage={handlePageChange} />
         </div>
       );
     case 'sampler':
+      firebase.analytics().logEvent('entered_sampler');
       return (
         <div className="App">
           <Sampler setPage={handlePageChange} />
         </div>
       );
     case 'info':
+      firebase.analytics().logEvent('entered_info');
       return (
         <div className="App">
           <Info setPage={handlePageChange}/>
         </div>
       );
     case 'works':
+      firebase.analytics().logEvent('entered_works');
       return(
         <div className="App">
           <Works setPage={handlePageChange}/>
