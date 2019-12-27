@@ -106,7 +106,7 @@ export const FingerArp =(props)=>{
         text.alignment = 'right';
         text.weight = 'bold';
         setText(text);
-        let text2 = two.makeText(`Fingers closer -> Tempo Higher`, width/2, height/4);
+        let text2 = two.makeText(`Disable silent mode!`, width/2, height/4);
         text2.size = '5vmin';
         text2.family = 'Alef';
         setText2(text2)
@@ -377,20 +377,18 @@ export const FingerArp =(props)=>{
                             window.addEventListener('devicemotion', (e) => {handleMotion(e)});
                         }   
                      }).catch(console.error);
-                     firebase.analytics().logEvent('devicemotion_enabled_manually');
                 } else {
                     window.addEventListener('devicemotion', (e) => {handleMotion(e)});
-                    firebase.analytics().logEvent('devicemotion_enabled_automatically');
                     // handle regular non iOS 13+ devices
                 }
                 }}
             onTouchMove={e=>{handleMove(e)}}
             onTouchEnd={e=>{onRelease(e)}}
             >
-            <h1 style={{position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');setTimeout(()=>{pattern.stop()},100)}}>exit</h1>
+            <h1 style={{position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');setTimeout(()=>{pattern.stop()},100);firebase.analytics().logEvent('five_exit',{level_reached: currentLevel});}}>exit</h1>
             <h1 style={{position: 'absolute',bottom: 0,right:0,zIndex:800}} onTouchStart={(e)=>{setInst('999');firebase.analytics().logEvent('watched_instructions');}}>?</h1>
             <div style={{zIndex:inst,position:'absolute',height:'100vh',backgroundColor:'white',padding:'0 3vmin'}} onTouchStart={(e)=>{setInst('0')}} className="instructions_five" >
-                <h2 style={{textAlign:'center'}}>Each finger plays a different note<br/><br/> move your fingers closer or farther away from each other to change the tempo<br/><br/>Follow the intructions on the top left side to change the chord<br/><br/></h2>
+                <h2 style={{textAlign:'center'}}>No sound? Disable silent mode<br/><br/>Each finger plays a different note<br/><br/> move your fingers closer or farther away from each other to change the tempo<br/><br/>Follow the intructions on the top left side to change the chord<br/><br/></h2>
                 <h3>It's more fun with headphones</h3>
             </div>
             </div>

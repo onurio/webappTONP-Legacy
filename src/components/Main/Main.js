@@ -6,7 +6,10 @@ import {Heading} from '../Heading/Heading';
 import {pixelRatio} from '../HeadAnimation/HeadAnimation';
 import { isMobile } from '../../App';
 import {isIphone} from '../../App';
-
+import facebookIcon from '../../images/facebook.svg'
+import youtubeIcon from '../../images/youtube.svg';
+import instagramIcon from '../../images/instagram.svg';
+import githubIcon from '../../images/github.svg';
 
 
 
@@ -14,7 +17,6 @@ import {isIphone} from '../../App';
 let heading = <HeadAnimation/>;
 
 export const Main=(props)=>{
-  // const [count,setCount] = useState(1);
 
   useEffect(()=>{  
     if(pixelRatio <= 2 && isMobile && !isIphone)
@@ -41,10 +43,10 @@ export const Main=(props)=>{
           <p>An interactive music project by musician, composer and programmer Omri Nuri.</p>
           <div className='socialmedia_icons'>
                 <ul>
-                    <li><a href='http://www.instagram.com/omrinuri' rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='instagram' src='./instagram.svg'/></a></li>
-                    <li><a href="https://www.facebook.com/theomrinuriproject" rel="noopener noreferrer" target="_blank" ><img className="social_icon" alt='facebook' src='./facebook.svg' /></a></li>
-                    <li><a href="https://www.youtube.com/channel/UCWTtkU868XGUQy0uMJt71kA" rel="noopener noreferrer" target="_blank"><img className="social_icon" alt='youtube' src='./youtube.svg' /></a></li>
-                    <li><a href="https://github.com/onurio" rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='github' src='./github.svg' /></a></li>
+                    <li><a href='http://www.instagram.com/omrinuri' rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='instagram' src={instagramIcon}/></a></li>
+                    <li><a href="https://www.facebook.com/theomrinuriproject" rel="noopener noreferrer" target="_blank" ><img className="social_icon" alt='facebook' src={facebookIcon} /></a></li>
+                    <li><a href="https://www.youtube.com/channel/UCWTtkU868XGUQy0uMJt71kA" rel="noopener noreferrer" target="_blank"><img className="social_icon" alt='youtube' src={youtubeIcon} /></a></li>
+                    <li><a href="https://github.com/onurio" rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='github' src={githubIcon} /></a></li>
                 </ul>
           </div>
     </div>  
