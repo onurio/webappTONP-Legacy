@@ -4,7 +4,7 @@ import './App.css';
 import {Main} from './components/Main/Main';
 import {Info} from './components/Info/Info';
 import {Works} from './components/Works/Works';
-import {FourNotes} from './components/FourNotes/FourNotes';
+// import {FourNotes} from './components/FourNotes/FourNotes';
 import Tone from 'tone';
 import e1 from '../src/audio/1.wav';
 import kick from '../src/audio/Kick.mp3';
@@ -14,24 +14,13 @@ import {Play} from './components/Play/Play';
 import { FingerArpContainer } from './components/FingerArp/FingerArpContainer';
 import firebase from 'firebase/app';
 import 'firebase/analytics';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {fireConfig} from './fireconfig/fireConfig';
 
 
 
-// Your web app's Firebase configuration
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCipbOI9bknXe9JZJ-oHbzbV0KCHPI8rmo",
-  authDomain: "the-omri-nuri-project-website.firebaseapp.com",
-  databaseURL: "https://the-omri-nuri-project-website.firebaseio.com",
-  projectId: "the-omri-nuri-project-website",
-  storageBucket: "the-omri-nuri-project-website.appspot.com",
-  messagingSenderId: "702757741154",
-  appId: "1:702757741154:web:074561e0bba4230cace73b",
-  measurementId: "G-JQT3PYZGRB"
-};
-
-firebase.initializeApp(firebaseConfig);
-
+firebase.initializeApp(fireConfig);
 
 
 export {firebase};
@@ -74,7 +63,6 @@ var autoPanner = new Tone.AutoPanner(1).toMaster();
 
 
 function App() {
-  const [page,setPage] = useState('main');
   const [soundEffects,setSoundEffects] = useState(undefined);
   const [areEffectsLoaded,setAreEffectsLoaded] = useState(false);
 
@@ -114,68 +102,94 @@ function App() {
 
 
   const handlePageChange=(page)=>{
-    setPage(page);
+    // setPage(page);
     if (areEffectsLoaded && effectMapping[page] !== undefined)
     {
       soundEffects.triggerAttack(effectMapping[page])
     }
   }
 
-  switch(page) {
-    default:
-        return (
-          <div className="App" style={{}}>
-            <Main setPage={handlePageChange}/>
-          </div>
-        );
-    case 'play':
-      firebase.analytics().logEvent('pressed_play');
-      return (
-        <div className="App" >
+  return(
+    <div className='App'>
+      <Router>
+        <Route path='/' exact>
+          <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord}/>
+        </Route>
+        <Route path='/play' exact>
           <Play setPage={handlePageChange}/>
-        </div>
-      );
-    case 'main':
-      return (
-        <div className="App">
-          <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord} />
-        </div>
-      );
-    case 'five':
-      firebase.analytics().logEvent('entered_five');
-      return (
-        <div className="App">
+        </Route>
+        <Route path='/play/five' exact>
           <FingerArpContainer setPage={handlePageChange} />
-        </div>
-      );
-    case 'sampler':
-      firebase.analytics().logEvent('entered_sampler');
-      return (
-        <div className="App">
+        </Route>
+        <Route path='/play/sampler' exact>
           <Sampler setPage={handlePageChange} />
-        </div>
-      );
-    case 'info':
-      firebase.analytics().logEvent('entered_info');
-      return (
-        <div className="App">
+        </Route>
+        <Route path='/info' exact>
           <Info setPage={handlePageChange}/>
-        </div>
-      );
-    case 'works':
-      firebase.analytics().logEvent('entered_works');
-      return(
-        <div className="App">
+        </Route>
+        <Route path='/works' exact>
           <Works setPage={handlePageChange}/>
-        </div>
-      );
-    case 'fournotes':
-      return(
-        <div className="App">
-          <FourNotes setPage={handlePageChange}/>
-        </div>
-      );
-  }
+        </Route>
+      </Router>
+    </div>
+    
+  )
+
+  // switch(page) {
+  //   default:
+  //       return (
+  //         <div className="App" style={{}}>
+  //           <Main setPage={handlePageChange}/>
+  //         </div>
+  //       );
+  //   case 'play':
+  //     firebase.analytics().logEvent('pressed_play');
+  //     return (
+  //       <div className="App" >
+  //         <Play setPage={handlePageChange}/>
+  //       </div>
+  //     );
+  //   case 'main':
+  //     return (
+  //       <div className="App">
+  //         <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord} />
+  //       </div>
+  //     );
+  //   case 'five':
+  //     firebase.analytics().logEvent('entered_five');
+  //     return (
+  //       <div className="App">
+  //         <FingerArpContainer setPage={handlePageChange} />
+  //       </div>
+  //     );
+  //   case 'sampler':
+  //     firebase.analytics().logEvent('entered_sampler');
+  //     return (
+  //       <div className="App">
+  //         <Sampler setPage={handlePageChange} />
+  //       </div>
+  //     );
+  //   case 'info':
+  //     firebase.analytics().logEvent('entered_info');
+  //     return (
+  //       <div className="App">
+  //         <Info setPage={handlePageChange}/>
+  //       </div>
+  //     );
+  //   case 'works':
+  //     firebase.analytics().logEvent('entered_works');
+  //     return(
+  //       <div className="App">
+  //         <Works setPage={handlePageChange}/>
+  //       </div>
+  //     );
+  //   case 'fournotes':
+  //     return(
+  //       <div className="App">
+  //         <FourNotes setPage={handlePageChange}/>
+  //       </div>
+  //     );
+  // }
 
 }
 

@@ -3,6 +3,7 @@ import Tone from 'tone';
 import Two from 'two.js';
 import {easeInOut,easeOutQuad,findDistance,streamSmoother} from '../../utils/utils';
 import {firebase} from '../../App';
+import {Link} from 'react-router-dom';
 
 
 Tone.context.latencyHint = 'interactive';
@@ -337,6 +338,7 @@ export const FingerArp =(props)=>{
 
 
     useEffect(()=>{
+        firebase.analytics().logEvent('entered_five');
         updateSize();
         window.addEventListener('resize',(e)=>{updateSize()});
         return(()=>{
@@ -385,7 +387,9 @@ export const FingerArp =(props)=>{
             onTouchMove={e=>{handleMove(e)}}
             onTouchEnd={e=>{onRelease(e)}}
             >
-            <h1 style={{position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');setTimeout(()=>{pattern.stop()},100);firebase.analytics().logEvent('five_exit',{level_reached: currentLevel});}}>exit</h1>
+            <Link to='/play'>
+                <h1 style={{color:'black',position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');setTimeout(()=>{pattern.stop()},100);firebase.analytics().logEvent('five_exit',{level_reached: currentLevel});}}>exit</h1>
+            </Link>
             <h1 style={{position: 'absolute',bottom: 0,right:0,zIndex:800}} onTouchStart={(e)=>{setInst('999');firebase.analytics().logEvent('watched_instructions');}}>?</h1>
             <div style={{zIndex:inst,position:'absolute',height:'100vh',backgroundColor:'white',padding:'0 3vmin'}} onTouchStart={(e)=>{setInst('0')}} className="instructions_five" >
                 <h2 style={{textAlign:'center'}}>No sound? Disable silent mode<br/><br/>Each finger plays a different note<br/><br/> move your fingers closer or farther away from each other to change the tempo<br/><br/>Follow the intructions on the top left side to change the chord<br/><br/></h2>

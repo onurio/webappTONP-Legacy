@@ -5,10 +5,13 @@ import facebookIcon from '../../images/facebook.svg'
 import youtubeIcon from '../../images/youtube.svg';
 import instagramIcon from '../../images/instagram.svg';
 import githubIcon from '../../images/github.svg';
+import {firebase} from '../../App';
+
 
 export const Info = (props)=>{
     return(
         <div className='main'>
+            {firebase.analytics().logEvent('entered_info')}
             <header>
                 <NavBar setPage={props.setPage}/>
             </header>

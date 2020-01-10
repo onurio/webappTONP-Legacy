@@ -2,11 +2,13 @@ import React from 'react';
 import {InstaPost} from './InstaPost/InstaPost';
 import { NavBar } from '../NavBar/NavBar';
 import './Works.css';
+import {firebase} from '../../App';
 
 export const Works=(props)=>{
 
     return (
         <div className='main mainwrapper'>
+            {firebase.analytics().logEvent('entered_works')}
             <header>
                 <NavBar setPage={props.setPage}/>
             </header>

@@ -8,6 +8,9 @@ import {Instructions} from './Instructions/Instructions';
 import {keys} from '../../utils/utils';
 import githubIcon from '../../images/github.svg';
 import backIcon from '../../images/left-arrow.svg';
+import logo from '../../images/logo.svg';
+import { Link } from 'react-router-dom';
+import { firebase } from '../../App';
 
 const loadingStyle = {
   pointerEvents: 'none',
@@ -81,9 +84,10 @@ export function Sampler(props){
   
 
   useEffect(()=>{
+    firebase.analytics().logEvent('entered_sampler');
     pitchShift.pitch = 5;
     pitchShift.windowSize = 0.02;
-    const newPlayer = new Tone.Player(nateSmith,insTimeout=setTimeout(()=>{setIsLoaded(true)},2000)).chain(pitchShift,Tone.Master);
+    const newPlayer = new Tone.Player(nateSmith,()=>{insTimeout=setTimeout(()=>{setIsLoaded(true)},500)}).chain(pitchShift,Tone.Master);
     newPlayer.loop = true;
     newPlayer.fadeOut = 0.015;
     newPlayer.fadeIn = 0.01;
@@ -186,9 +190,11 @@ export function Sampler(props){
         <h1 style={loadingStyle}>Loading...</h1>
         <h3 style={loadingStyle}>Turn off silent mode!</h3>
       </div>
-      <img className='left-arrow' src={backIcon} onClick={(e)=>{props.setPage('main');clearTimeout(insTimeout)}} alt='back'  />
+      <Link to='/play'>
+        <img className='left-arrow' src={backIcon} onClick={(e)=>{props.setPage('main');clearTimeout(insTimeout)}} alt='back'  />
+      </Link>
       <div style={{zIndex:'10',position: 'absolute',height: '100%',left: (width-window.innerWidth),width: '100%',display: 'flex',boxShadow: '  3px 0px 14px 0px rgba(0,0,0,0.38)',backgroundImage: backgrounds[currentBackground].url,backgroundColor:currentColor,justifyContent: 'center',alignItems: 'center',pointerEvents:'none',transition: transition}}>
-        <img style={{height: '40vh',zIndex: '100',userSelect:'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',animationName:'spin',animationDuration: `${2000-position*500}ms`,animationIterationCount: 'infinite',animationTimingFunction: 'linear'}} alt="logo" src='./logo.svg'/> 
+        <img style={{height: '40vh',zIndex: '100',userSelect:'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',animationName:'spin',animationDuration: `${2000-position*500}ms`,animationIterationCount: 'infinite',animationTimingFunction: 'linear'}} alt="logo" src={logo}/> 
       </div>
       <a style={{position:"absolute",bottom: '0',margin:'0 1vmin',left: '0',zIndex: '200'}} href="https://github.com/onurio/webappTONP" rel="noopener noreferrer" target="_blank" ><img className="github_link" alt='github' src={githubIcon} /></a>
       <Instructions opacity={instOpacity}/>

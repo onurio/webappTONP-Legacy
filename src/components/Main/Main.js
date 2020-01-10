@@ -10,6 +10,8 @@ import facebookIcon from '../../images/facebook.svg'
 import youtubeIcon from '../../images/youtube.svg';
 import instagramIcon from '../../images/instagram.svg';
 import githubIcon from '../../images/github.svg';
+import { Link } from 'react-router-dom';
+import {firebase} from '../../App';
 
 
 
@@ -37,9 +39,11 @@ export const Main=(props)=>{
             <NavBar setPage={props.setPage}/>
           </header>
           {heading}
-          <button className="button" onClick={()=>{
-            props.setPage('play');
-            }}>Play!</button>
+          <Link to='play' className='no_link_decoration'>
+            <button className="button" onClick={()=>{
+              props.setPage('play');firebase.analytics().logEvent('pressed_play');
+              }}>Play!</button>
+          </Link>
           <p>An interactive music project by musician, composer and programmer Omri Nuri.</p>
           <div className='socialmedia_icons'>
                 <ul>

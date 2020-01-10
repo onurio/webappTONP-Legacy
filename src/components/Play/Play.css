@@ -46,10 +46,17 @@
 .gameContainer{
     width: 55%;
     height: 100vh;
+    margin-top: 10vmin;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.gameContainer a{
+    margin: 0 2vmin;
+    height: 80%;
+    width: 40%;
 }
 
 
@@ -66,6 +73,10 @@
         height: calc(100vh - 10rem);
         width: 100%;
         flex-direction: column;
+    }
+
+    .gameContainer a{
+        width: 80%;
     }
 
     .game{

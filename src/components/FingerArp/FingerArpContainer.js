@@ -2,6 +2,7 @@ import React from 'react'
 import {FingerArp} from './FingerArp';
 import {isMobile} from '../../App';
 import {NavBar} from '../NavBar/NavBar';
+import { Link } from 'react-router-dom';
 
 
 export const FingerArpContainer=(props)=>{
@@ -19,7 +20,9 @@ export const FingerArpContainer=(props)=>{
                     <h1>Sorry! This game is for mobile Only 
                         <br/><br/>
                         Use your smartphone or try the<br/>
-                        <a href='#otherGame' style={{color:'aqua',textDecoration:'underline',cursor:'pointer'}} onClick={(e)=>props.setPage('sampler')}>other game!</a>
+                        <Link className='no_link_decoration' to='/play/sampler'>
+                            <a href='#otherGame' style={{color:'aqua',textDecoration:'underline',cursor:'pointer'}} onClick={(e)=>props.setPage('play')}>other game!</a>
+                        </Link>
                     </h1>
                 </div>
             );

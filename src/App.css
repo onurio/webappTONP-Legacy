@@ -16,7 +16,9 @@
   color: white;
 }
 
-
+.no_link_decoration{
+  text-decoration: none;
+}
 
 .button {
   background-color: white;
