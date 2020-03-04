@@ -20,6 +20,11 @@ export const Play =(props)=>{
                     <div onClick={(e)=>props.setPage('play')} className="game fiveGame"><h1 style={{fontSize:'16vmin'}} className="gameName" >5</h1></div>
                 </Link>
             </div>
+            <div className="gameContainer">
+                <Link className='no_link_decoration' to='/play/oscilloscope'>
+                    <div onClick={(e)=>props.setPage('play')} className="game oscillosynthGame"><h1 style={{}} className="gameName" >Oscillosynth</h1></div>
+                </Link>
+            </div>
         </div>
     );
 }

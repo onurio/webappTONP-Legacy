@@ -16,6 +16,7 @@ import firebase from 'firebase/app';
 import 'firebase/analytics';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {fireConfig} from './fireconfig/fireConfig';
+import { Oscilloscope } from './components/Oscilloscope/Oscilloscope';
 
 
 
@@ -130,67 +131,13 @@ function App() {
         <Route path='/works' exact>
           <Works setPage={handlePageChange}/>
         </Route>
+        <Route path='/play/oscilloscope' exact>
+          <Oscilloscope setPage={handlePageChange} />
+        </Route>
       </Router>
     </div>
     
   )
-
-  // switch(page) {
-  //   default:
-  //       return (
-  //         <div className="App" style={{}}>
-  //           <Main setPage={handlePageChange}/>
-  //         </div>
-  //       );
-  //   case 'play':
-  //     firebase.analytics().logEvent('pressed_play');
-  //     return (
-  //       <div className="App" >
-  //         <Play setPage={handlePageChange}/>
-  //       </div>
-  //     );
-  //   case 'main':
-  //     return (
-  //       <div className="App">
-  //         <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord} />
-  //       </div>
-  //     );
-  //   case 'five':
-  //     firebase.analytics().logEvent('entered_five');
-  //     return (
-  //       <div className="App">
-  //         <FingerArpContainer setPage={handlePageChange} />
-  //       </div>
-  //     );
-  //   case 'sampler':
-  //     firebase.analytics().logEvent('entered_sampler');
-  //     return (
-  //       <div className="App">
-  //         <Sampler setPage={handlePageChange} />
-  //       </div>
-  //     );
-  //   case 'info':
-  //     firebase.analytics().logEvent('entered_info');
-  //     return (
-  //       <div className="App">
-  //         <Info setPage={handlePageChange}/>
-  //       </div>
-  //     );
-  //   case 'works':
-  //     firebase.analytics().logEvent('entered_works');
-  //     return(
-  //       <div className="App">
-  //         <Works setPage={handlePageChange}/>
-  //       </div>
-  //     );
-  //   case 'fournotes':
-  //     return(
-  //       <div className="App">
-  //         <FourNotes setPage={handlePageChange}/>
-  //       </div>
-  //     );
-  // }
-
 }
 
 export default App;
