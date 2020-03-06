@@ -12,6 +12,7 @@ import instagramIcon from '../../images/instagram.svg';
 import githubIcon from '../../images/github.svg';
 import { Link } from 'react-router-dom';
 import {firebase} from '../../App';
+import text from '../../utils/text';
 
 
 
@@ -36,15 +37,15 @@ export const Main=(props)=>{
   return( 
     <div className="main">
           <header>
-            <NavBar setPage={props.setPage}/>
+            <NavBar lang={props.lang} setLang={props.setLang} setPage={props.setPage}/>
           </header>
           {heading}
           <Link to='play' className='no_link_decoration'>
             <button className="button" onClick={()=>{
               props.setPage('play');firebase.analytics().logEvent('pressed_play');
-              }}>Play!</button>
+              }}>{text.home.button[props.lang]}</button>
           </Link>
-          <p>An interactive music project by musician, composer and programmer Omri Nuri.</p>
+          <p>{text.home.text[props.lang]}</p>
           <div className='socialmedia_icons'>
                 <ul>
                     <li><a href='http://www.instagram.com/omrinuri' rel="noopener noreferrer" target="_blank" ><img className="social_icon"  alt='instagram' src={instagramIcon}/></a></li>

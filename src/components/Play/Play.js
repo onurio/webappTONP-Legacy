@@ -10,7 +10,7 @@ export const Play =(props)=>{
     return (
         <div className='main'>
             <header>
-                <NavBar setPage={props.setPage}/>
+                <NavBar setLang={props.setLang} lang={props.lang} setPage={props.setPage}/>
             </header>
             <div className="gameContainer">
                 <Link className='no_link_decoration' to='/play/sampler'>

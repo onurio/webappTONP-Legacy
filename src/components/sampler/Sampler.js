@@ -11,6 +11,7 @@ import backIcon from '../../images/left-arrow.svg';
 import logo from '../../images/logo.svg';
 import { Link } from 'react-router-dom';
 import { firebase } from '../../App';
+import text from '../../utils/text';
 
 const loadingStyle = {
   pointerEvents: 'none',
@@ -187,8 +188,8 @@ export function Sampler(props){
         <h4 style={{marginBlockStart:'0',marginBlockEnd:'0'}}>click or press A/S/D/F</h4>
       </div>
       <div style={{display: loading,justifyContent: 'center',flexDirection:'column',alignItems: 'center',position: 'absolute' ,width: '100%',height: '100%'}}>
-        <h1 style={loadingStyle}>Loading...</h1>
-        <h3 style={loadingStyle}>Turn off silent mode!</h3>
+        <h1 style={loadingStyle}>{text.sampler.loading[props.lang]}</h1>
+        <h3 style={loadingStyle}>{text.sampler.slient[props.lang]}</h3>
       </div>
       <Link to='/play'>
         <img className='left-arrow' src={backIcon} onClick={(e)=>{props.setPage('main');clearTimeout(insTimeout)}} alt='back'  />
@@ -197,7 +198,7 @@ export function Sampler(props){
         <img style={{height: '40vh',zIndex: '100',userSelect:'none',WebkitTapHighlightColor:'rgb(0,0,0,0)',WebkitUserSelect:'none',WebkitTouchCallout:'none',animationName:'spin',animationDuration: `${2000-position*500}ms`,animationIterationCount: 'infinite',animationTimingFunction: 'linear'}} alt="logo" src={logo}/> 
       </div>
       <a style={{position:"absolute",bottom: '0',margin:'0 1vmin',left: '0',zIndex: '200'}} href="https://github.com/onurio/webappTONP" rel="noopener noreferrer" target="_blank" ><img className="github_link" alt='github' src={githubIcon} /></a>
-      <Instructions opacity={instOpacity}/>
+      <Instructions lang={props.lang} opacity={instOpacity}/>
       <PlayDiv sampleNumber={'1'} keyP={'A'} backgrounds={backgrounds} bg={'bg1'}   onClick={onClick} onRelease={onRelease} />
       <PlayDiv sampleNumber={'2'} keyP={'S'} backgrounds={backgrounds} bg={'bg2'}  onClick={onClick} onRelease={onRelease}/>
       <PlayDiv sampleNumber={'3'} keyP={'D'} backgrounds={backgrounds} bg={'bg3'}  onClick={onClick} onRelease={onRelease} />

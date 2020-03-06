@@ -6,6 +6,7 @@ import youtubeIcon from '../../images/youtube.svg';
 import instagramIcon from '../../images/instagram.svg';
 import githubIcon from '../../images/github.svg';
 import {firebase} from '../../App';
+import text from '../../utils/text';
 
 
 export const Info = (props)=>{
@@ -13,19 +14,17 @@ export const Info = (props)=>{
         <div className='main'>
             {firebase.analytics().logEvent('entered_info')}
             <header>
-                <NavBar setPage={props.setPage}/>
+                <NavBar setLang={props.setLang} lang={props.lang} setPage={props.setPage}/>
             </header>
             <div className='spacer'/>
-            <p>The Omri Nuri Project, explores interactive music from differents perspectives.</p>
-            <h3>Bio</h3>
-            <p>Omri, was born in Israel, where at an early age he began to get involved in jazz and improvisation. He was very interested in the interaction he shared with other musicians when he improvised and was fascinated by the idea that music acts as a language.
-            Years later, he moved to New York in order to continue his studies for a period of two years. It is in that city when he begins to investigate this new idea using the tools that technology offers.
-            </p>
-            <h3>Collaborators</h3>
-            <p>Albor Debernardi - Psycologist advisor focused on different intereses and necesities of clients and users in the creation of interactive experiences</p>
-            <h3>Contact</h3>
-            <p>For booking, concerts, custom interactive music experiences (for companies, schools, galleries and more)</p>
-            <h4>Presskit</h4>
+            <p>{text.info.short[props.lang]}</p>
+            <h3>{text.info.biohead[props.lang]}</h3>
+            <p>{text.info.bio[props.lang]}</p>
+            <h3>{text.info.collabhead[props.lang]}</h3>
+            <p>{text.info.collab[props.lang]}</p>
+            <h3>{text.info.contacthead[props.lang]}</h3>
+            <p>{text.info.contact[props.lang]}</p>
+            <h4>{text.info.presskit[props.lang]}</h4>
             <div style={{marginBottom:'5vmin'}} >
                 <a style={{marginRight: '2vmin'}} href='./Presskit-English.pdf' download>English</a>
                 <a href='./Presskit-Español.pdf' download>Español</a>

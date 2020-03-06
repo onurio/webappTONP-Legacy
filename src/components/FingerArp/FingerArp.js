@@ -4,7 +4,8 @@ import Two from 'two.js';
 import {easeInOut,easeOutQuad,findDistance,streamSmoother} from '../../utils/utils';
 import {firebase} from '../../App';
 import {Link} from 'react-router-dom';
-
+import text from '../../utils/text'; 
+let dynamictext = text;
 
 Tone.context.latencyHint = 'interactive';
 
@@ -107,18 +108,18 @@ export const FingerArp =(props)=>{
         text.alignment = 'right';
         text.weight = 'bold';
         setText(text);
-        let text2 = two.makeText(`Disable silent mode!`, width/2, height/4);
+        let text2 = two.makeText(dynamictext.five.disable_silent[props.lang], width/2, height/4);
         text2.size = '5vmin';
         text2.family = 'Alef';
         setText2(text2)
-        let objective = two.makeText('Next chord:',leftInfoX,height/14);
+        let objective = two.makeText(dynamictext.five.next_chord[props.lang],leftInfoX,height/14);
         objective.size = '5vmin';
         objective.family = 'Alef';
         objective.alignment = 'left';
         objective.weight = 'bold';
-        let levelBpm = two.makeText(`Tempo: ${levels[currentLevel][1]}`,width/15,height/6);
+        let levelBpm = two.makeText(`${dynamictext.five.tempo[props.lang]} ${levels[currentLevel][1]}`,width/15,height/6);
         setLevelBpm(levelBpm);
-        let levelNotes = two.makeText(`Fingers: ${levels[currentLevel][0]}`,width/15,height/8);
+        let levelNotes = two.makeText(`${dynamictext.five.fingers[props.lang]} ${levels[currentLevel][0]}`,width/15,height/8);
         levelNotes.alignment = 'left';
         levelBpm.alignment = 'left';
         levelNotes.size = '4.5vmin';
@@ -202,7 +203,7 @@ export const FingerArp =(props)=>{
             Tone.Transport.bpm.value= max;
             setCurrentBpm(max);
         }
-        text.value = `Tempo:${Math.round(max)}`;
+        text.value = `${dynamictext.five.tempo[props.lang]}${Math.round(max)}`;
     }
 
     useEffect(()=>{
@@ -233,12 +234,12 @@ export const FingerArp =(props)=>{
         if(rightTempo&&rightNotes){
             if(!winning){
                 winning = true;
-                text2.value = `next chord in 3`;
+                text2.value = `${dynamictext.five.next_chord_in[props.lang]} 3`;
                 function endCountdown() {
                     winningSynth.triggerAttackRelease(chords[currentLevel],0.5);
                     setCurrentLevel(currentLevel+1);
-                    levelBpm.value = `Tempo: ${levels[currentLevel+1][1]}`;
-                    levelNotes.value = `Fingers: ${levels[currentLevel+1][0]}`;
+                    levelBpm.value = `${dynamictext.five.tempo[props.lang]} ${levels[currentLevel+1][1]}`;
+                    levelNotes.value = `${dynamictext.five.fingers[props.lang]} ${levels[currentLevel+1][0]}`;
                     text2.value = '';
                     setCurrentChord(chords[currentLevel+1]);
                     
@@ -249,7 +250,7 @@ export const FingerArp =(props)=>{
                       clearInterval(interval);
                       endCountdown();
                     } else {
-                      text2.value = `next chord in ${count}`;
+                      text2.value = `${dynamictext.five.next_chord_in[props.lang]} ${count}`;
                       two.update();
                       count--;
                     }
@@ -388,12 +389,12 @@ export const FingerArp =(props)=>{
             onTouchEnd={e=>{onRelease(e)}}
             >
             <Link to='/play'>
-                <h1 style={{color:'black',position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');setTimeout(()=>{pattern.stop()},100);firebase.analytics().logEvent('five_exit',{level_reached: currentLevel});}}>exit</h1>
+                <h1 style={{color:'black',position: 'absolute',bottom: 0,left:0,zIndex:800}} onTouchStart={(e)=>{props.setPage('play');setTimeout(()=>{pattern.stop()},100);firebase.analytics().logEvent('five_exit',{level_reached: currentLevel});}}>{dynamictext.five.exit[props.lang]}</h1>
             </Link>
             <h1 style={{position: 'absolute',bottom: 0,right:0,zIndex:800}} onTouchStart={(e)=>{setInst('999');firebase.analytics().logEvent('watched_instructions');}}>?</h1>
             <div style={{zIndex:inst,position:'absolute',height:'100vh',backgroundColor:'white',padding:'0 3vmin'}} onTouchStart={(e)=>{setInst('0')}} className="instructions_five" >
-                <h2 style={{textAlign:'center'}}>No sound? Disable silent mode<br/><br/>Each finger plays a different note<br/><br/> move your fingers closer or farther away from each other to change the tempo<br/><br/>Follow the intructions on the top left side to change the chord<br/><br/></h2>
-                <h3>It's more fun with headphones</h3>
+                <h2 style={{textAlign:'center'}}>{dynamictext.five.inst1[props.lang]}<br/><br/>{dynamictext.five.inst2[props.lang]}<br/><br/> {dynamictext.five.inst3[props.lang]}<br/><br/>{dynamictext.five.inst4[props.lang]}<br/><br/></h2>
+                <h3>{dynamictext.five.inst5[props.lang]}</h3>
             </div>
             </div>
         </div>

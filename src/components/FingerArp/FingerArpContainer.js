@@ -9,7 +9,7 @@ export const FingerArpContainer=(props)=>{
     switch (isMobile){
         case true:
             return(
-                <FingerArp setPage={props.setPage}/>
+                <FingerArp lang={props.lang} setPage={props.setPage}/>
             );
         case false:
             return(

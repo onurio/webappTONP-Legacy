@@ -19,7 +19,8 @@
 .navbar_navigation{
     display: flex;
     align-items: center;
-    padding: 0 15%;
+    padding: 0 3%;
+    width: 100%;
 }
 
 .navbar_navigation ul{
@@ -61,12 +62,22 @@
     user-select: none;
 }
 
+
+
 @media only screen and (min-width: 768px){
 
     .navItem:hover{
         font-size: 1.6rem;
         font-weight: bold;
     }    
+
+    .nav-spacer{
+        display: none;
+    }
+
+    .navbar_navigation{
+        padding: 0 3% !important;
+    }
 } 
 
 

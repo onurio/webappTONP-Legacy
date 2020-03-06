@@ -66,6 +66,7 @@ var autoPanner = new Tone.AutoPanner(1).toMaster();
 function App() {
   const [soundEffects,setSoundEffects] = useState(undefined);
   const [areEffectsLoaded,setAreEffectsLoaded] = useState(false);
+  const [lang,setLang] = useState('EN');
 
   const preventZoom=(e)=>{
     e.preventDefault();
@@ -114,25 +115,25 @@ function App() {
     <div className='App'>
       <Router>
         <Route path='/' exact>
-          <Main setPage={handlePageChange} playChord={playChord} stopChord={stopChord}/>
+          <Main  lang={lang} setPage={handlePageChange} setLang={setLang} playChord={playChord} stopChord={stopChord}/>
         </Route>
         <Route path='/play' exact>
-          <Play setPage={handlePageChange}/>
+          <Play setLang={setLang} lang={lang} setPage={handlePageChange}/>
         </Route>
         <Route path='/play/five' exact>
-          <FingerArpContainer setPage={handlePageChange} />
+          <FingerArpContainer lang={lang} setPage={handlePageChange} />
         </Route>
         <Route path='/play/sampler' exact>
-          <Sampler setPage={handlePageChange} />
+          <Sampler lang={lang} setPage={handlePageChange} />
         </Route>
         <Route path='/info' exact>
-          <Info setPage={handlePageChange}/>
+          <Info setLang={setLang} lang={lang} setPage={handlePageChange}/>
         </Route>
         <Route path='/works' exact>
-          <Works setPage={handlePageChange}/>
+          <Works setLang={setLang} lang={lang} setPage={handlePageChange}/>
         </Route>
         <Route path='/play/oscilloscope' exact>
-          <Oscilloscope setPage={handlePageChange} />
+          <Oscilloscope lang={lang} setPage={handlePageChange} />
         </Route>
       </Router>
     </div>

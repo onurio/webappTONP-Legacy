@@ -3,6 +3,7 @@ import {InstaPost} from './InstaPost/InstaPost';
 import { NavBar } from '../NavBar/NavBar';
 import './Works.css';
 import {firebase} from '../../App';
+import text from '../../utils/text';
 
 export const Works=(props)=>{
 
@@ -10,17 +11,17 @@ export const Works=(props)=>{
         <div className='main mainwrapper'>
             {firebase.analytics().logEvent('entered_works')}
             <header>
-                <NavBar setPage={props.setPage}/>
+                <NavBar setLang={props.setLang} lang={props.lang} setPage={props.setPage}/>
             </header>
             <div/>
                 <div className='spacer'/>
-                <h3>The Interactive Concert</h3>
-                <p>Using their smartphones, the public can play audiovisual instruments made for their phones, allowing them to improvise and play with the band.</p> 
+                <h3>{text.works.concerthead[props.lang]}</h3>
+                <p>{text.works.concert[props.lang]}</p> 
                 <InstaPost url="https://www.instagram.com/p/BzgX41IhgmB/"/>
                 <InstaPost url="https://www.instagram.com/p/By64eY4BuWd/"/> 
                 <InstaPost url="https://www.instagram.com/p/Byp51e0BWbi/"/> 
-                <h3>The Interactive Plant</h3>
-                <p>Using a special sensor, the plant allows people to play interactive music compositions written for it. It accompanied by LED lights for visual effect</p> 
+                <h3>{text.works.planthead[props.lang]}</h3>
+                <p>{text.works.plant[props.lang]}</p> 
                 <InstaPost url="https://www.instagram.com/p/B0etT2mBFvz/"/> 
                 <InstaPost url="https://www.instagram.com/p/Bpn3sfyFosm/"/> 
         </div>
