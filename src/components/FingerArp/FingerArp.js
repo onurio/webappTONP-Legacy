@@ -172,7 +172,7 @@ export const FingerArp =(props)=>{
         pattern.interval = "8n";
         // pattern.humanize = true;
         // pattern.probability = 0.9;
-        pattern.start(0);
+        pattern.start('+0.05');
         text2.value = `${chord.reverse()}`;
         two.update();
     }
@@ -242,7 +242,8 @@ export const FingerArp =(props)=>{
                     levelNotes.value = `${dynamictext.five.fingers[props.lang]} ${levels[currentLevel+1][0]}`;
                     text2.value = '';
                     setCurrentChord(chords[currentLevel+1]);
-                    
+                    pattern.stop();
+                    Tone.Transport.stop();
                   }
                   
                 function handleTimer() {
@@ -283,7 +284,7 @@ export const FingerArp =(props)=>{
         setFingers(notes);
         newChord = [...newChord].slice(5-notes);
         changeChord(newChord);
-        Tone.Transport.start(); 
+        Tone.Transport.start('+0.05'); 
         getBpm(touches);       
     };
 

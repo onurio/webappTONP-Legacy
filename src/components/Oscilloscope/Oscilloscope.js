@@ -217,8 +217,8 @@ export const  Oscilloscope=(props)=> {
 
 
   return (
-    <div className="main no-select" style={{backgroundColor:'white'}}    >
-      <div style={{position:'absolute',top:20,left:20,display:'flex',alignItems:'center',flexDirection:'row'}}>
+    <div className="main no-select" style={{position: 'fixed',backgroundColor:'white'}}    >
+      <div style={{position:'absolute',top:20,left:20,display:'flex',alignItems:'center',flexDirection:'row',backgroundColor:'white'}}>
       <button onClick={e=>{setSynth(1);omniOsc.type='amsine';omniOsc.modulationType='triangle'}} style={{cursor:'pointer',borderRadius:6,border: '1px solid black',padding:5,marginLeft:5,fontSize:25,backgroundColor: synth===1 ?'mediumslateblue':'white'}}>
         AM
       </button>
@@ -248,7 +248,7 @@ export const  Oscilloscope=(props)=> {
       </Link>
       
       <h1 style={{cursor:'pointer',position: 'absolute',bottom: 20,right:0,zIndex:800,color:'black',border: '1px solid',borderColor:'black',padding: '0 15px',borderRadius:'100%'}} onClick={(e)=>{setInst('999');firebase.analytics().logEvent('oscilloscope_watched_instructions')}}>?</h1>
-      <div style={{cursor:'pointer',zIndex:inst,position:'absolute',borderRadius:20,border:'1px solid black',height:isMobile?'100%':'70%',backgroundColor:'white',padding:'0 3vmin',color:'black'}} onClick={(e)=>{setInst('-1')}} className="instructions_five" >
+      <div style={{display:inst==='-1'?'none':'inline',cursor:'pointer',zIndex:inst,position:'absolute',borderRadius:20,border:'1px solid black',height:isMobile?'100%':'70%',backgroundColor:'white',padding:'0 3vmin',color:'black'}} onClick={(e)=>{setInst('-1')}} className="instructions_five" >
                 <h3 style={{padding:'5vmin',textAlign:'center'}}>{text.oscilloscope.nosound[props.lang]}<br/><br/>{isMobile ? text.oscilloscope.motioninst[props.lang]: null }<br/><br/>{text.oscilloscope.touchtoplay[props.lang]} {motionState ? text.oscilloscope.motionenabledinst[props.lang] : text.oscilloscope.motiondisabledinst[props.lang]} <br/><br/>{text.oscilloscope.insteffects[props.lang]}</h3>
       </div>
     </div>
