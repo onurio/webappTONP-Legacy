@@ -4,7 +4,7 @@
     border-radius: 8px;
     background-repeat: no-repeat;
     background-size: cover;
-    margin: 2vmin 4vmin;
+    /* margin: 2vmin 4vmin; */
 }
 
 .sorry{
@@ -53,10 +53,22 @@
     background-position: center;
 }
 
+.looperGame{
+    background-image: url('../../images/looper.png');
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    width: 42%;
+    height: 81%;
+}
+
+
 .gameContainer{
     width: 55%;
     height: 40vh;
-    margin-top: 6vmin;
+    /* margin-top: 6vmin; */
     margin-bottom: 0;
     display: flex;
     flex-direction: row;
@@ -65,7 +77,13 @@
 }
 
 
-
+.looperGame a{
+    width: 100% !important;
+    height: 100% !important;
+    font-size: 7vmin;
+    font-weight: bold;
+    text-decoration: none;
+}
 
 
 .gameContainer a{
@@ -84,8 +102,8 @@
 
 @media only screen and (max-width: 768px){
     .gameContainer{
-        top: 10rem;
-        height: calc(50vh - 10rem);
+        top: 20rem;
+        height: calc(40vh);
         width: 100%;
         flex-direction: column;
     }
@@ -95,17 +113,18 @@
     }
 
     .game{
-        width: 90%;
+        width: 100%;
         height: 80%;
-        margin: 0 2vmin;
-        margin-top: 10vmin;
-        margin-bottom: 10vh;
     }
 
     .fiveGame{
         background-position: bottom;
     }
 
+    .looperGame{
+        width: 80%;
+        height: 65%;
+    }
 
     .sampGame{
         background-position: center;

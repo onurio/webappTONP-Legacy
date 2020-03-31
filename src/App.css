@@ -62,3 +62,22 @@
   -webkit-touch-callout: none;
   -webkit-tap-highlight-color: 'rgb(0,0,0,0)';
 }
+
+
+.scrollable{
+  overflow: scroll;
+  width: 100vw;
+  height: calc(100vh - 5rem);
+  padding-top: 5rem;;
+}
+
+
+.column{
+  display: flex;
+  flex-direction: column;
+}
+
+.center{
+  justify-content: center;
+  align-items: center;
+}

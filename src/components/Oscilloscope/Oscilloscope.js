@@ -21,12 +21,17 @@ let startTime;
 var omniOsc = new Tone.OmniOscillator("C#4", "amsine").connect(delay);;
 omniOsc.volume.value = -10;
 omniOsc.modulationType = 'triangle';
+omniOsc.fadeIn = 20;
+omniOsc.fadeOut = 50;
+
 let motionEnabled=false;
 
 
 // synth.oscillator.type = 'sine';
 let canvasCtx;
 let streamY = [];
+
+
 export const  Oscilloscope=(props)=> {
   const canvas = useRef(null);
   const [synth,setSynth] = useState(1);
@@ -46,6 +51,7 @@ export const  Oscilloscope=(props)=> {
   useEffect(()=>{
     window.addEventListener('devicemotion',(e)=>{handleMotion(e)});
     startTime = Date.now();
+    firebase.analytics().logEvent('entered_oscilloscope');
     // eslint-disable-next-line
   },[]);
 
@@ -82,10 +88,12 @@ export const  Oscilloscope=(props)=> {
       case 1:
             omniOsc.harmonicity.value = x*0.1;
             omniOsc.frequency.value = y;
+            omniOsc.phase = x*360;
         break;
       case 2:
             omniOsc.harmonicity.value = x*2;
             omniOsc.frequency.value = y;
+            omniOsc.phase = x*360;
         break;
       default:
         return;
@@ -121,7 +129,7 @@ export const  Oscilloscope=(props)=> {
     }
    
     
-    omniOsc.start();
+    omniOsc.start('+0.05');
   }
 
   const handleEnd=e=>{
@@ -129,11 +137,11 @@ export const  Oscilloscope=(props)=> {
     if(isMobile){
       if(e.touches.length===0&&omniOsc.state==='started'){
         
-        omniOsc.stop();
+        omniOsc.stop('+0.05');
       } 
     } else {
       if(omniOsc.state==='started'){
-        omniOsc.stop();
+        omniOsc.stop('+0.05');
 
       }
     }
@@ -183,14 +191,18 @@ export const  Oscilloscope=(props)=> {
           if (permissionState === 'granted') {
               window.addEventListener('devicemotion', (e) => {handleMotion(e)});
               setMotionState(true);
+              // alert('YAY');
               success=true;
           } else {
             alert('unable to activate motion sensor');
           }
-       }).catch(console.error);
+       }).catch(error=>alert(error));
       } else {
           window.addEventListener('devicemotion', (e) => {handleMotion(e)});
           // handle regular non iOS 13+ devices
+          setMotionState(true);
+              // alert('YAY');
+          success=true;
       }
     if(motionEnabled){
       motionEnabled = false;
@@ -205,12 +217,12 @@ export const  Oscilloscope=(props)=> {
 
 
   return (
-    <div className="main no-select" style={{backgroundColor:'white'}}>
+    <div className="main no-select" style={{backgroundColor:'white'}}    >
       <div style={{position:'absolute',top:20,left:20,display:'flex',alignItems:'center',flexDirection:'row'}}>
-      <button onClick={e=>{setSynth(1);omniOsc.type='amsine';omniOsc.modulationType='triangle'}} style={{borderRadius:6,border: '1px solid black',padding:5,marginLeft:5,fontSize:25,backgroundColor: synth===1 ?'#4CAF50':'white'}}>
+      <button onClick={e=>{setSynth(1);omniOsc.type='amsine';omniOsc.modulationType='triangle'}} style={{cursor:'pointer',borderRadius:6,border: '1px solid black',padding:5,marginLeft:5,fontSize:25,backgroundColor: synth===1 ?'mediumslateblue':'white'}}>
         AM
       </button>
-      <button onClick={e=>{setSynth(2);omniOsc.type='fmtriangle'}} style={{borderRadius:6,border: '1px solid black',padding:5,marginLeft:5,fontSize:25,backgroundColor:synth=== 2? '#4CAF50':'white'}}>
+      <button onClick={e=>{setSynth(2);omniOsc.type='fmtriangle'}} style={{cursor:'pointer',borderRadius:6,border: '1px solid black',padding:5,marginLeft:5,fontSize:25,backgroundColor:synth=== 2? 'mediumslateblue':'white'}}>
         FM
       </button>
       <input onChange={e=>handleDelayChange(e)} id='slider' type="range" min="0" max="100" defaultValue="0.5" ></input>
@@ -234,9 +246,10 @@ export const  Oscilloscope=(props)=> {
       <Link to='/play'>
           <h1 style={{color:'black',position: 'absolute',bottom: 20,left:0,zIndex:800}} onClick={(e)=>{props.setPage('play');setTimeout(()=>{omniOsc.status==='started' ? omniOsc.stop():setSynth(1); delay.feedback.value=0},0);firebase.analytics().logEvent('oscilloscope_time_played',Date.now()-startTime)}}>{text.oscilloscope.exit[props.lang]}</h1>
       </Link>
-      <h1 style={{position: 'absolute',bottom: 20,right:0,zIndex:800,color:'black',border: '1px solid',borderColor:'black',padding: '0 15px',borderRadius:'100%'}} onClick={(e)=>{setInst('999');firebase.analytics().logEvent('watched_instructions')}}>?</h1>
-      <div style={{zIndex:inst,position:'absolute',height:'100%',backgroundColor:'white',padding:'0 3vmin',color:'black'}} onClick={(e)=>{setInst('-1')}} className="instructions_five" >
-                <h3 style={{textAlign:'center'}}>{text.oscilloscope.nosound[props.lang]}<br/><br/>{isMobile ? text.oscilloscope.motioninst[props.lang]: null }<br/><br/>{text.oscilloscope.touchtoplay[props.lang]} {motionState ? text.oscilloscope.motionenabledinst[props.lang] : text.oscilloscope.motiondisabledinst[props.lang]} <br/><br/>{text.oscilloscope.insteffects[props.lang]}</h3>
+      
+      <h1 style={{cursor:'pointer',position: 'absolute',bottom: 20,right:0,zIndex:800,color:'black',border: '1px solid',borderColor:'black',padding: '0 15px',borderRadius:'100%'}} onClick={(e)=>{setInst('999');firebase.analytics().logEvent('oscilloscope_watched_instructions')}}>?</h1>
+      <div style={{cursor:'pointer',zIndex:inst,position:'absolute',borderRadius:20,border:'1px solid black',height:isMobile?'100%':'70%',backgroundColor:'white',padding:'0 3vmin',color:'black'}} onClick={(e)=>{setInst('-1')}} className="instructions_five" >
+                <h3 style={{padding:'5vmin',textAlign:'center'}}>{text.oscilloscope.nosound[props.lang]}<br/><br/>{isMobile ? text.oscilloscope.motioninst[props.lang]: null }<br/><br/>{text.oscilloscope.touchtoplay[props.lang]} {motionState ? text.oscilloscope.motionenabledinst[props.lang] : text.oscilloscope.motiondisabledinst[props.lang]} <br/><br/>{text.oscilloscope.insteffects[props.lang]}</h3>
       </div>
     </div>
   );

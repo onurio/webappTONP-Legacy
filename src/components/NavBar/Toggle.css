@@ -2,6 +2,11 @@
 
 
  @charset "UTF-8";
+
+
+ label{
+   cursor: pointer;
+ }
  .switch-toggle a, .switch-light span span {
    display: none; }
  

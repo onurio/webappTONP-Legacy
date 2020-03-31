@@ -12,6 +12,7 @@ export const Play =(props)=>{
             <header>
                 <NavBar setLang={props.setLang} lang={props.lang} setPage={props.setPage}/>
             </header>
+            <div className='scrollable column center'>
             <div className="gameContainer">
                 <Link className='no_link_decoration' to='/play/sampler'>
                     <div onClick={(e)=>props.setPage('play')} className="game sampGame"><h1 className="gameName" >Drum Sampler</h1></div>
@@ -24,7 +25,10 @@ export const Play =(props)=>{
                 <Link className='no_link_decoration' to='/play/oscilloscope'>
                     <div onClick={(e)=>props.setPage('play')} className="game oscillosynthGame"><h1 style={{}} className="gameName" >Oscillosynth</h1></div>
                 </Link>
+                <div className="game looperGame"><a href='https://lupapp.com' className="gameName" >Looper</a></div>
             </div>
+            </div>
+            
         </div>
     );
 }

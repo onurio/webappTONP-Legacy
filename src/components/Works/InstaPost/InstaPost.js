@@ -12,7 +12,7 @@ export const InstaPost=(props)=>{
             url={props.url}
             maxWidth={'100%'}
             hideCaption={true}
-            containerTagName='InstaPost'
+            containerTagName='div'
             protocol=''
             injectScript
             onLoading={() => {}}

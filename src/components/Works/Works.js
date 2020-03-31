@@ -4,6 +4,7 @@ import { NavBar } from '../NavBar/NavBar';
 import './Works.css';
 import {firebase} from '../../App';
 import text from '../../utils/text';
+import {isMobile} from '../../App';
 
 export const Works=(props)=>{
 
@@ -22,8 +23,10 @@ export const Works=(props)=>{
                 <InstaPost url="https://www.instagram.com/p/Byp51e0BWbi/"/> 
                 <h3>{text.works.planthead[props.lang]}</h3>
                 <p>{text.works.plant[props.lang]}</p> 
+                <iframe title='plant-video-1' width={isMobile?window.innerWidth:window.innerWidth*0.6} height={isMobile?window.innerHeight*0.5:window.innerWidth*0.3} src="https://www.youtube.com/embed/ew1s5GP1vwo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {/* <InstaPost url="https://www.instagram.com/p/B-GH7ARh8Et/"/>  */}
                 <InstaPost url="https://www.instagram.com/p/B0etT2mBFvz/"/> 
-                <InstaPost url="https://www.instagram.com/p/Bpn3sfyFosm/"/> 
+                
         </div>
     );
 }
