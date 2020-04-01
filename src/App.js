@@ -132,7 +132,7 @@ function App() {
         <Route path='/works' exact>
           <Works setLang={setLang} lang={lang} setPage={handlePageChange}/>
         </Route>
-        <Route path='/play/oscilloscope' exact>
+        <Route path='/play/osci' exact>
           <Oscilloscope lang={lang} setPage={handlePageChange} />
         </Route>
       </Router>

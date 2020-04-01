@@ -71,6 +71,11 @@ const text = {
         }
     },
     works: {
+        interactiveMusicGames:{
+            EN: 'Interactive Music Games',
+            ES: 'Juegos de Musica Interactive',
+            HE: 'משחקי מוסיקה אינטראקטיבית'
+        },
         concerthead: {
             EN: 'The Interactive Concert',
             ES: 'El Concierto Interactivo',

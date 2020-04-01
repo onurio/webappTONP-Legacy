@@ -40,23 +40,39 @@ export const  Oscilloscope=(props)=> {
   const [motionButtonColor,setMotionButtonColor] = useState('white');
 
   useEffect(()=>{
-    canvasCtx = canvas.current.getContext("2d");
-    draw();
+
   });
 
 
+  const updateSize=(e)=>{
+    let canvas = document.getElementById('oscilloscope');
+    canvas.width = window.innerWidth*2;
+    canvas.height = window.innerHeight*2;
+    canvas.style.width  = `${window.innerWidth}px`;
+    canvas.style.height = `${window.innerHeight}px`;     
+  }
 
+
+  
 
 
   useEffect(()=>{
-    window.addEventListener('devicemotion',(e)=>{handleMotion(e)});
+    canvasCtx = canvas.current.getContext("2d");
+    updateSize();
+    setInterval(() => {
+      draw();
+    }, 40);
     startTime = Date.now();
     firebase.analytics().logEvent('entered_oscilloscope');
+    window.addEventListener('resize',(e)=>{updateSize(e)});
+        return(()=>{
+            window.removeEventListener('resize',(e)=>updateSize(e));
+    });
     // eslint-disable-next-line
   },[]);
 
   function draw() {
-    requestAnimationFrame(draw);
+    // requestAnimationFrame(draw);
     var waveArray = waveform.getValue();
     canvasCtx.fillStyle = "#000000";
     canvasCtx.lineWidth = 1.5;
@@ -191,17 +207,15 @@ export const  Oscilloscope=(props)=> {
           if (permissionState === 'granted') {
               window.addEventListener('devicemotion', (e) => {handleMotion(e)});
               setMotionState(true);
-              // alert('YAY');
               success=true;
           } else {
-            alert('unable to activate motion sensor');
+            alert('unable to activate motion sensor, try refreshing in incognito');
           }
        }).catch(error=>alert(error));
       } else {
           window.addEventListener('devicemotion', (e) => {handleMotion(e)});
           // handle regular non iOS 13+ devices
           setMotionState(true);
-              // alert('YAY');
           success=true;
       }
     if(motionEnabled){

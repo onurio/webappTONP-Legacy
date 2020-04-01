@@ -5,6 +5,7 @@ import './Works.css';
 import {firebase} from '../../App';
 import text from '../../utils/text';
 import {isMobile} from '../../App';
+import { Link } from 'react-router-dom';
 
 export const Works=(props)=>{
 
@@ -16,6 +17,11 @@ export const Works=(props)=>{
             </header>
             <div/>
                 <div className='spacer'/>
+                <Link to='/play' className='no_link_decoration'>
+                    <button className="button">
+                        {text.works.interactiveMusicGames[props.lang]}
+                    </button>    
+                </Link>
                 <h3>{text.works.concerthead[props.lang]}</h3>
                 <p>{text.works.concert[props.lang]}</p> 
                 <InstaPost url="https://www.instagram.com/p/BzgX41IhgmB/"/>
