@@ -75,7 +75,7 @@ export const  Oscilloscope=(props)=> {
     // requestAnimationFrame(draw);
     var waveArray = waveform.getValue();
     canvasCtx.fillStyle = "#000000";
-    canvasCtx.lineWidth = 1.5;
+    canvasCtx.lineWidth = 4;
     canvasCtx.clearRect(0, 0, window.innerWidth*2, window.innerHeight*2);
     canvasCtx.beginPath();
     for (var i = 0; i < waveArray.length; i++) {

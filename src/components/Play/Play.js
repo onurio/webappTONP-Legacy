@@ -23,7 +23,7 @@ export const Play =(props)=>{
             </div>
             <div className="gameContainer">
                 <Link className='no_link_decoration' to='/play/osci'>
-                    <div onClick={(e)=>props.setPage('play')} className="game oscillosynthGame"><h1 style={{}} className="gameName" >Oscillosynth</h1></div>
+                    <div onClick={(e)=>props.setPage('play')} className="game oscillosynthGame"><h1 style={{}} className="gameName" >Osci</h1></div>
                 </Link>
                 <div className="game looperGame"><a href='https://lupapp.com' className="gameName" >Looper</a></div>
             </div>
