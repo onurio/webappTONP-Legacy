@@ -1,1 +1,1 @@
-The Omri Nuri Project's Website. live at - http://omrinuri.com
+Legacy website
